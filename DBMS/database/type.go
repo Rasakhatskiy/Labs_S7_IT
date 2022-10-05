@@ -5,49 +5,49 @@ type DBType interface {
 }
 
 type TypeInteger struct {
-	val int64
+	Val int64
 }
 
 func (t TypeInteger) Value() interface{} {
-	return t.val
+	return t.Val
 }
 
 type TypeReal struct {
-	val float64
+	Val float64
 }
 
 func (t TypeReal) Value() interface{} {
-	return t.val
+	return t.Val
 }
 
 type TypeChar struct {
-	val rune
+	Val rune
 }
 
 func (t TypeChar) Value() interface{} {
-	return t.val
+	return t.Val
 }
 
 type TypeString struct {
-	val string
+	Val string
 }
 
 func (t TypeString) Value() interface{} {
-	return t.val
+	return t.Val
 }
 
 type TypeHTML struct {
-	val string
+	Val string
 }
 
 func (t TypeHTML) Value() interface{} {
-	return t.val
+	return t.Val
 }
 
 type TypeStringRange struct {
-	val []string
+	Val []string
 }
 
 func (t TypeStringRange) Value() interface{} {
-	return t.val
+	return t.Val
 }

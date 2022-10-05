@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 )
 
@@ -10,18 +11,24 @@ type Table struct {
 	records []Record
 }
 
-func createTable(types []reflect.Type) Table {
+func CreateTable(types []reflect.Type) Table {
 	return Table{
 		types:   types,
 		records: nil,
 	}
 }
 
-func (t *Table) addRecord(values []DBType) (Record, error) {
+func (t *Table) AddRecord(values []DBType) error {
 	for i, value := range values {
 		if reflect.TypeOf(value) != t.types[i] {
-			return Record{}, errors.New("types mismatch")
+			return errors.New("types mismatch")
 		}
 	}
-	return Record{values: values}, nil
+	t.records = append(t.records, Record{values: values})
+
+	for _, val := range t.records[len(t.records)-1].values {
+		fmt.Println(val.Value())
+	}
+
+	return nil
 }

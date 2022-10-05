@@ -1,22 +1,23 @@
 package main
 
 import (
+	"DBMS/database"
 	"fmt"
-
-	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/widget"
+	"reflect"
 )
 
 func main() {
-	myApp := app.New()
-	myWindow := myApp.NewWindow("Hello")
-	myWindow.SetContent(widget.NewLabel("Hello"))
+	suck := []reflect.Type{reflect.TypeOf(database.TypeInteger{}), reflect.TypeOf(database.TypeInteger{}), reflect.TypeOf(database.TypeReal{}), reflect.TypeOf(database.TypeString{})}
+	table := database.CreateTable(suck)
 
-	myWindow.Show()
-	myApp.Run()
-	tidyUp()
-}
+	err := table.AddRecord([]database.DBType{
+		database.TypeInteger{Val: 15},
+		database.TypeInteger{Val: 15},
+		database.TypeReal{Val: 47.50},
+		database.TypeString{Val: "Brush"},
+	})
+	if err != nil {
+		fmt.Printf(err.Error())
+	}
 
-func tidyUp() {
-	fmt.Println("Exited")
 }
