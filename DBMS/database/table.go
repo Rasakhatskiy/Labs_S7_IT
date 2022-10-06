@@ -7,12 +7,14 @@ import (
 )
 
 type Table struct {
+	name    string
 	types   []reflect.Type
 	records []Record
 }
 
-func CreateTable(types []reflect.Type) Table {
+func CreateTable(name string, types []reflect.Type) Table {
 	return Table{
+		name:    name,
 		types:   types,
 		records: nil,
 	}
