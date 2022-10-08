@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="add creation windows">
-      <change afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
+    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="gui v1">
+      <change afterPath="$PROJECT_DIR$/aboba.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI.go" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/type.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,12 +19,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
+        <option value="HTTP Request" />
       </list>
     </option>
   </component>
   <component name="GOROOT" url="file://Y:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HttpClientSelectedEnvironments">
+    <file url="jar://$APPLICATION_HOME_DIR$/plugins/restClient/lib/restClient.jar!/com/intellij/ws/rest/client/requests/collection/get-requests.http" environment="test" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -57,7 +60,16 @@
       <recent name="F:\Documents\University\Semester 7\IT\DBMS\utils" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build DBMS (1)">
+    <configuration name="go build DBMS (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="DBMS" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="DBMS" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/server.go" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build DBMS" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="DBMS" />
       <working_directory value="$PROJECT_DIR$" />
@@ -67,6 +79,35 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="aboba | GET request with a header" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" index="2" requestIdentifier="GET request with a header" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="aboba | GET request with dynamic variables" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" index="6" requestIdentifier="GET request with dynamic variables" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="aboba | GET request with environment variables" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" index="4" requestIdentifier="GET request with environment variables" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="aboba | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build DBMS" />
+      <item itemvalue="Go Build.go build DBMS (1)" />
+      <item itemvalue="HTTP Request.aboba | #1" />
+      <item itemvalue="HTTP Request.aboba | GET request with a header" />
+      <item itemvalue="HTTP Request.aboba | GET request with dynamic variables" />
+      <item itemvalue="HTTP Request.aboba | GET request with environment variables" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build DBMS (1)" />
+        <item itemvalue="HTTP Request.aboba | GET request with dynamic variables" />
+        <item itemvalue="HTTP Request.aboba | GET request with environment variables" />
+        <item itemvalue="HTTP Request.aboba | GET request with a header" />
+        <item itemvalue="HTTP Request.aboba | #1" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -87,7 +128,8 @@
     <MESSAGE value="add gui and DB types" />
     <MESSAGE value="add &quot;add record&quot;" />
     <MESSAGE value="add creation windows" />
-    <option name="LAST_COMMIT_MESSAGE" value="add creation windows" />
+    <MESSAGE value="gui v1" />
+    <option name="LAST_COMMIT_MESSAGE" value="gui v1" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
