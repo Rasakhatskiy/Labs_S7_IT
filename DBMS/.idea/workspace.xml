@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="add &quot;add record&quot;">
-      <change afterPath="$PROJECT_DIR$/GUI.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
+    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="add creation windows">
+      <change afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/table.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI.go" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/type.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,6 +52,11 @@
     "last_opened_file_path": "C:/Users/Maksym"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Documents\University\Semester 7\IT\DBMS\utils" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="go build DBMS" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="DBMS" />
@@ -83,7 +86,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add gui and DB types" />
     <MESSAGE value="add &quot;add record&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="add &quot;add record&quot;" />
+    <MESSAGE value="add creation windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="add creation windows" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

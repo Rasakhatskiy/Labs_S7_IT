@@ -9,6 +9,7 @@ import (
 var gCurrentDB database.Database
 
 func main() {
+
 	suck := []reflect.Type{reflect.TypeOf(database.TypeInteger{}), reflect.TypeOf(database.TypeInteger{}), reflect.TypeOf(database.TypeReal{}), reflect.TypeOf(database.TypeString{})}
 	table := database.CreateTable("a", suck)
 
@@ -21,7 +22,5 @@ func main() {
 	if err != nil {
 		fmt.Printf(err.Error())
 	}
-
-	startGUI()
 
 }
