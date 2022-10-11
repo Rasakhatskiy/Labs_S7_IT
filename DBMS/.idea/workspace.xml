@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="WOW!!! WEB DEVELOPMENT :(" />
+    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="WOW!!! WEB DEVELOPMENT :(">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aboba.http" beforeDir="false" afterPath="$PROJECT_DIR$/aboba.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/jsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/public/vite.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/App.svelte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/assets/svelte.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/lib/Counter.svelte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/vite-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/vite.config.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +74,7 @@
       <recent name="F:\Documents\University\Semester 7\IT\DBMS\utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build DBMS (1)">
+  <component name="RunManager" selected="Go Build.go build DBMS">
     <configuration name="go build DBMS (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="DBMS" />
       <working_directory value="$PROJECT_DIR$" />
@@ -83,24 +102,24 @@
     <configuration name="aboba | GET request with environment variables" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" index="4" requestIdentifier="GET request with environment variables" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="aboba | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" requestIdentifier="#1" runType="Run single request">
+    <configuration name="aboba | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" index="2" requestIdentifier="#2" runType="Run single request">
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Go Build.go build DBMS" />
       <item itemvalue="Go Build.go build DBMS (1)" />
-      <item itemvalue="HTTP Request.aboba | #1" />
+      <item itemvalue="HTTP Request.aboba | #2" />
       <item itemvalue="HTTP Request.aboba | GET request with a header" />
       <item itemvalue="HTTP Request.aboba | GET request with dynamic variables" />
       <item itemvalue="HTTP Request.aboba | GET request with environment variables" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.aboba | #2" />
         <item itemvalue="Go Build.go build DBMS (1)" />
         <item itemvalue="HTTP Request.aboba | GET request with dynamic variables" />
         <item itemvalue="HTTP Request.aboba | GET request with environment variables" />
         <item itemvalue="HTTP Request.aboba | GET request with a header" />
-        <item itemvalue="HTTP Request.aboba | #1" />
       </list>
     </recent_temporary>
   </component>

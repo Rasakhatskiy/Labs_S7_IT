@@ -16,6 +16,7 @@ func main() {
 
 	e.POST("/users", func(c echo.Context) error { return nil })
 	e.GET("/users/:id", getUser)
+	e.GET("/databases", getDatabase)
 	e.PUT("/users/:id", func(c echo.Context) error { return nil })
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
 
@@ -27,4 +28,12 @@ func getUser(c echo.Context) error {
 	// User ID from path `users/:id`
 	id := c.Param("id")
 	return c.String(http.StatusOK, id)
+}
+
+func getDatabase(c echo.Context) error {
+	response := map[string]interface{}{
+		"databases": []string{"aboba", "amosus", "sus"},
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
