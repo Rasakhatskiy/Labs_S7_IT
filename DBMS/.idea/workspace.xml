@@ -4,25 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="WOW!!! WEB DEVELOPMENT :(">
+    <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="routing+">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aboba.http" beforeDir="false" afterPath="$PROJECT_DIR$/aboba.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/.vscode/extensions.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/jsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/public/vite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/App.svelte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/app.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/assets/svelte.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/lib/Counter.svelte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/vite-env.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,22 +38,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/Maksym"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Maksym&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\Documents\University\Semester 7\IT\DBMS\utils" />
@@ -144,7 +129,9 @@
     <MESSAGE value="add creation windows" />
     <MESSAGE value="gui v1" />
     <MESSAGE value="WOW!!! WEB DEVELOPMENT :(" />
-    <option name="LAST_COMMIT_MESSAGE" value="WOW!!! WEB DEVELOPMENT :(" />
+    <MESSAGE value="routing" />
+    <MESSAGE value="routing+" />
+    <option name="LAST_COMMIT_MESSAGE" value="routing+" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -2,9 +2,16 @@ package database
 
 import "log"
 
+var gDatabases []*Database
+
 type Database struct {
-	name   string
-	tables []Table
+	name     string
+	filePath string
+	tables   []Table
+}
+
+func loadDatabases() {
+
 }
 
 func CreateDatabase(name string) Database {

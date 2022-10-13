@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	//createTestJson()
+
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
@@ -16,12 +18,31 @@ func main() {
 
 	e.POST("/users", func(c echo.Context) error { return nil })
 	e.GET("/users/:id", getUser)
-	e.GET("/databases", getDatabase)
+	e.GET("/databases", getDatabases)
+	e.GET("/databases/:name/tables", getTables)
+
 	e.PUT("/users/:id", func(c echo.Context) error { return nil })
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
+
+//type Entry struct {
+//	Name string `json:"name"`
+//	Path string `json:"path"`
+//}
+//
+//func createTestJson() {
+//	datas := make(map[string]Entry)
+//	datas["gorillaz"] = Entry{Name: "gorillaz", Path: "databases/gorillaz"}
+//	datas["diamonds"] = Entry{Name: "diamonds", Path: "databases/diamonds"}
+//	datas["ff"] = Entry{Name: "ff", Path: "databases/ff"}
+//
+//	jsonString, err := json.Marshal(datas)
+//	if err == nil {
+//		_ = ioutil.WriteFile("databases.json", jsonString, 0644)
+//	}
+//}
 
 // e.GET("/users/:id", getUser)
 func getUser(c echo.Context) error {
@@ -30,10 +51,17 @@ func getUser(c echo.Context) error {
 	return c.String(http.StatusOK, id)
 }
 
-func getDatabase(c echo.Context) error {
+func getDatabases(c echo.Context) error {
 	response := map[string]interface{}{
 		"databases": []string{"aboba", "amosus", "sus"},
 	}
+	return c.JSON(http.StatusOK, response)
+}
 
+func getTables(c echo.Context) error {
+	//databaseName := c.Param(":name")
+	response := map[string]interface{}{
+		"databases": []string{"aboba", "amosus", "sus"},
+	}
 	return c.JSON(http.StatusOK, response)
 }
