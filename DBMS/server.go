@@ -2,6 +2,7 @@ package main
 
 import (
 	"DBMS/database"
+	"DBMS/utils"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
@@ -12,6 +13,12 @@ func main() {
 	//createTestJson()
 
 	e := echo.New()
+	e.HTTPErrorHandler = func(err error, c echo.Context) {
+		_ = c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"code":    500,
+			"message": err.Error(),
+		})
+	}
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
@@ -22,29 +29,13 @@ func main() {
 	e.GET("/users/:id", getUser)
 	e.GET("/databases", getDatabases)
 	e.GET("/databases/:name", getTables)
+	e.GET("/databases/:name/:table", getTable)
 
 	e.PUT("/users/:id", func(c echo.Context) error { return nil })
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
-
-//type Entry struct {
-//	Name string `json:"name"`
-//	Path string `json:"path"`
-//}
-//
-//func createTestJson() {
-//	datas := make(map[string]Entry)
-//	datas["gorillaz"] = Entry{Name: "gorillaz", Path: "databases/gorillaz"}
-//	datas["diamonds"] = Entry{Name: "diamonds", Path: "databases/diamonds"}
-//	datas["ff"] = Entry{Name: "ff", Path: "databases/ff"}
-//
-//	jsonString, err := json.Marshal(datas)
-//	if err == nil {
-//		_ = ioutil.WriteFile("databases.json", jsonString, 0644)
-//	}
-//}
 
 // e.GET("/users/:id", getUser)
 func getUser(c echo.Context) error {
@@ -70,4 +61,31 @@ func getTables(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, tables)
+}
+
+func getTable(c echo.Context) error {
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	table, err := db.GetTable(tableName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	return c.JSON(http.StatusOK, table)
 }

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"DBMS/utils"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -44,7 +45,7 @@ func LoadDatabase(name string) (*Database, error) {
 
 func createTempDB() *Database {
 	typesList := []reflect.Type{reflect.TypeOf(TypeInteger{}), reflect.TypeOf(TypeInteger{}), reflect.TypeOf(TypeReal{}), reflect.TypeOf(TypeString{})}
-	table := CreateTable("typical table name 😁", typesList)
+	table := CreateTable("table_01", typesList)
 
 	err := table.AddRecord([]DBType{
 		TypeInteger{Val: 15},
@@ -52,15 +53,23 @@ func createTempDB() *Database {
 		TypeReal{Val: 47.50},
 		TypeString{Val: "Brush"},
 	})
+
+	err = table.AddRecord([]DBType{
+		TypeInteger{Val: 47},
+		TypeInteger{Val: 74},
+		TypeReal{Val: 11.22},
+		TypeString{Val: "smth"},
+	})
+
 	if err != nil {
 		fmt.Printf(err.Error())
 	}
 
 	t2 := table
-	t2.name = "WOW, new table!"
+	t2.name = "table_02"
 
 	t3 := table
-	t3.name = "Another one bites the dust! 🙀"
+	t3.name = "table_03"
 
 	return &Database{
 		name:     "amogus",
@@ -75,6 +84,15 @@ func (db *Database) GetTablesList() []string {
 		tables = append(tables, table.name)
 	}
 	return tables
+}
+
+func (db *Database) GetTable(name string) (*Table, error) {
+	for _, table := range db.tables {
+		if table.name == name {
+			return &table, nil
+		}
+	}
+	return nil, &utils.TableNotFoundError{TableName: name}
 }
 
 func CreateDatabase(name string) Database {
