@@ -1,0 +1,16 @@
+// import { error } from '@sveltejs/kit';
+import { PUBLIC_API_BASE_URL } from '$env/static/public';
+
+/** @type {import('./$types').PageLoad} */
+export async function load({ params }) {
+	const dbname = params.dbname;
+	console.log(dbname);
+	const tables = await (await fetch(PUBLIC_API_BASE_URL + '/databases/' + dbname)).json();
+	console.log(tables);
+	return {
+		dbname,
+		tables
+	};
+
+	// throw error(404, 'Not found');
+}

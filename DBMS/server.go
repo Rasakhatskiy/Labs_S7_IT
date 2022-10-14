@@ -1,8 +1,10 @@
 package main
 
 import (
+	"DBMS/database"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"log"
 	"net/http"
 )
 
@@ -19,7 +21,7 @@ func main() {
 	e.POST("/users", func(c echo.Context) error { return nil })
 	e.GET("/users/:id", getUser)
 	e.GET("/databases", getDatabases)
-	e.GET("/databases/:name/tables", getTables)
+	e.GET("/databases/:name", getTables)
 
 	e.PUT("/users/:id", func(c echo.Context) error { return nil })
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
@@ -53,15 +55,19 @@ func getUser(c echo.Context) error {
 
 func getDatabases(c echo.Context) error {
 	response := map[string]interface{}{
-		"databases": []string{"aboba", "amosus", "sus"},
+		"databases": []string{"aboba", "amogus", "sus"},
 	}
 	return c.JSON(http.StatusOK, response)
 }
 
 func getTables(c echo.Context) error {
-	//databaseName := c.Param(":name")
-	response := map[string]interface{}{
-		"databases": []string{"aboba", "amosus", "sus"},
+	databaseName := c.Param(":name")
+	db, err := database.LoadDatabase(databaseName)
+	tables := db.GetTablesList()
+
+	if err != nil {
+		log.Fatal("😭😭😭😭😭")
 	}
-	return c.JSON(http.StatusOK, response)
+
+	return c.JSON(http.StatusOK, tables)
 }
