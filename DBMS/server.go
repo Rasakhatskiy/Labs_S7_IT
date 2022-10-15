@@ -87,5 +87,44 @@ func getTable(c echo.Context) error {
 		}
 	}
 
-	return c.JSON(http.StatusOK, table)
+	var headers []JsonTableHeader
+	for i, _ := range table.Headers {
+		headers = append(headers, JsonTableHeader{
+			Name: table.Headers[i],
+			Type: table.Types[i].String(),
+		})
+	}
+
+	interValues := make([][]interface{}, len(table.Values))
+	for i, _ := range interValues {
+		interValues[i] = make([]interface{}, len(table.Values[i]))
+		for j, _ := range interValues[i] {
+			interValues[i][j] = table.Values[i][j].Value()
+		}
+	}
+
+	jt := JsonTable{
+		Headers: headers,
+		Values:  interValues,
+	}
+
+	return c.JSON(http.StatusOK, jt)
 }
+
+type JsonTableHeader struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
+type JsonTable struct {
+	Headers []JsonTableHeader `json:"headers"`
+	Values  [][]interface{}   `json:"values"`
+}
+
+//type JsonTable struct {
+//	Headers struct {
+//		Name []string `json:"name"`
+//		Type []string `json:"type"`
+//	} `json:"headers"`
+//	Values [][]database.DBType `json:"values"`
+//}

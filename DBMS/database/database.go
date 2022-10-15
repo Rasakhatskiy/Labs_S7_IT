@@ -33,7 +33,7 @@ func readDatabasesPaths() map[string]string {
 
 func LoadDatabase(name string) (*Database, error) {
 	//paths := readDatabasesPaths()
-	//path, ok := paths[name]
+	//path, ok := paths[Name]
 	//log.Println(path)
 	//if !ok {
 	//	return nil, errors.New("database does not exist 😭")
@@ -45,7 +45,8 @@ func LoadDatabase(name string) (*Database, error) {
 
 func createTempDB() *Database {
 	typesList := []reflect.Type{reflect.TypeOf(TypeInteger{}), reflect.TypeOf(TypeInteger{}), reflect.TypeOf(TypeReal{}), reflect.TypeOf(TypeString{})}
-	table := CreateTable("table_01", typesList)
+	headers := []string{"header_1", "numero_2", "top_3_monki", "help_me"}
+	table := CreateTable("table_01", typesList, headers)
 
 	err := table.AddRecord([]DBType{
 		TypeInteger{Val: 15},
@@ -66,10 +67,10 @@ func createTempDB() *Database {
 	}
 
 	t2 := table
-	t2.name = "table_02"
+	t2.Name = "table_02"
 
 	t3 := table
-	t3.name = "table_03"
+	t3.Name = "table_03"
 
 	return &Database{
 		name:     "amogus",
@@ -81,14 +82,14 @@ func createTempDB() *Database {
 func (db *Database) GetTablesList() []string {
 	var tables []string
 	for _, table := range db.tables {
-		tables = append(tables, table.name)
+		tables = append(tables, table.Name)
 	}
 	return tables
 }
 
 func (db *Database) GetTable(name string) (*Table, error) {
 	for _, table := range db.tables {
-		if table.name == name {
+		if table.Name == name {
 			return &table, nil
 		}
 	}
