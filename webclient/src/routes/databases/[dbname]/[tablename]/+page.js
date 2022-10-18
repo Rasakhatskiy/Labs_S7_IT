@@ -12,16 +12,8 @@ export async function load({ params }) {
 	).json();
 	console.log(table);
 
-	// headers = table.Headers;
-	// values = table.Values;
-
-	// console.log(headers)
-	// console.log(values)
-
 	return {
 		dbname,
 		table
-		// headers,
-		// values
 	};
 }

@@ -5,6 +5,7 @@ import (
 	"DBMS/utils"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"io/fs"
 	"log"
 	"net/http"
 )
@@ -46,19 +47,24 @@ func getUser(c echo.Context) error {
 
 func getDatabases(c echo.Context) error {
 	response := map[string]interface{}{
-		"databases": []string{"aboba", "amogus", "sus"},
+		"databases": []string{"aboba", "amogus", "EEEEE"},
 	}
 	return c.JSON(http.StatusOK, response)
 }
 
 func getTables(c echo.Context) error {
-	databaseName := c.Param(":name")
+	databaseName := c.Param("name")
 	db, err := database.LoadDatabase(databaseName)
-	tables := db.GetTablesList()
-
 	if err != nil {
-		log.Fatal("😭😭😭😭😭")
+		switch err.(type) {
+		case *fs.PathError:
+			return c.JSON(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
 	}
+
+	tables := db.GetTablesList()
 
 	return c.JSON(http.StatusOK, tables)
 }
@@ -78,6 +84,13 @@ func getTable(c echo.Context) error {
 	}
 
 	table, err := db.GetTable(tableName)
+
+	if err != nil {
+		log.Println(err.Error())
+	} else {
+		log.Println("Saved")
+	}
+
 	if err != nil {
 		switch err.(type) {
 		case *utils.TableNotFoundError:
@@ -91,7 +104,7 @@ func getTable(c echo.Context) error {
 	for i, _ := range table.Headers {
 		headers = append(headers, JsonTableHeader{
 			Name: table.Headers[i],
-			Type: table.Types[i].String(),
+			Type: table.Types[i],
 		})
 	}
 

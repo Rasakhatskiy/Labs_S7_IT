@@ -27,5 +27,5 @@ type InvalidIndexError struct {
 }
 
 func (m *InvalidIndexError) Error() string {
-	return fmt.Sprintf("database not found: %d", m.Id)
+	return fmt.Sprintf("invalid index: %d", m.Id)
 }

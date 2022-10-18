@@ -8,23 +8,28 @@ import (
 
 type Table struct {
 	Name    string
-	Types   []reflect.Type
+	Types   []string
 	Headers []string
 	Values  [][]DBType
 }
 
 func CreateTable(name string, types []reflect.Type, headers []string) Table {
+	var stringTypes []string
+	for _, t := range types {
+		stringTypes = append(stringTypes, t.String())
+	}
+
 	return Table{
 		Name:    name,
 		Headers: headers,
-		Types:   types,
+		Types:   stringTypes,
 		Values:  nil,
 	}
 }
 
 func (t *Table) CreateRecord(values []DBType) error {
 	for i, value := range values {
-		if reflect.TypeOf(value) != t.Types[i] {
+		if reflect.TypeOf(value).String() != t.Types[i] {
 			return errors.New("Types mismatch")
 		}
 	}

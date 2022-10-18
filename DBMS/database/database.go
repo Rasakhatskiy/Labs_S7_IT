@@ -31,17 +31,17 @@ func readDatabasesPaths() map[string]string {
 	return databasesPaths
 }
 
-func LoadDatabase(name string) (*Database, error) {
-	//paths := readDatabasesPaths()
-	//path, ok := paths[Name]
-	//log.Println(path)
-	//if !ok {
-	//	return nil, errors.New("database does not exist 😭")
-	//}
-
-	// todo read db from file
-	return createTempDB(), nil
-}
+//func LoadDatabase(name string) (*Database, error) {
+//	//paths := readDatabasesPaths()
+//	//path, ok := paths[Name]
+//	//log.Println(path)
+//	//if !ok {
+//	//	return nil, errors.New("database does not exist 😭")
+//	//}
+//
+//	// todo read db from file
+//	return createTempDB(), nil
+//}
 
 func createTempDB() *Database {
 	typesList := []reflect.Type{reflect.TypeOf(TypeInteger{}), reflect.TypeOf(TypeInteger{}), reflect.TypeOf(TypeReal{}), reflect.TypeOf(TypeString{})}
@@ -74,7 +74,7 @@ func createTempDB() *Database {
 
 	return &Database{
 		name:     "amogus",
-		filePath: "E",
+		filePath: "EEEEE",
 		tables:   []Table{table, t2, t3},
 	}
 }
