@@ -55,7 +55,7 @@
 									</tr>
 								{/each}
 								<!-- 404 test -->
-								<tr class="relative hover:bg-gray-100 dark:hover:bg-gray-700">
+								<!-- <tr class="relative hover:bg-gray-100 dark:hover:bg-gray-700">
 									<td
 										class="py-7 px-6 text-sm  font-medium text-center text-gray-900 whitespace-nowrap dark:text-white"
 									>
@@ -64,7 +64,7 @@
 											href="/databases/{data.dbname}/doesntexist">😭</a
 										>
 									</td>
-								</tr>
+								</tr> -->
 								<!-- 404 test -->
 							</tbody>
 						</table>
