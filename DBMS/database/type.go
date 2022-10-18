@@ -65,6 +65,11 @@ func (t TypeHTML) TypeName() string {
 	return "HTML Document"
 }
 
+func (t TypeHTML) Validate() bool {
+	//todo: implement
+	panic("implement me")
+}
+
 type TypeStringRange struct {
 	Val []string
 }
@@ -75,4 +80,9 @@ func (t TypeStringRange) Value() interface{} {
 
 func (t TypeStringRange) TypeName() string {
 	return "String Interval"
+}
+
+func (t TypeStringRange) Validate() bool {
+	//todo: implement
+	panic("implement me")
 }

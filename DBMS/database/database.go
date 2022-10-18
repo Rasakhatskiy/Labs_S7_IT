@@ -48,14 +48,14 @@ func createTempDB() *Database {
 	headers := []string{"header_1", "numero_2", "top_3_monki", "help_me"}
 	table := CreateTable("table_01", typesList, headers)
 
-	err := table.AddRecord([]DBType{
+	err := table.CreateRecord([]DBType{
 		TypeInteger{Val: 15},
 		TypeInteger{Val: 15},
 		TypeReal{Val: 47.50},
 		TypeString{Val: "Brush"},
 	})
 
-	err = table.AddRecord([]DBType{
+	err = table.CreateRecord([]DBType{
 		TypeInteger{Val: 47},
 		TypeInteger{Val: 74},
 		TypeReal{Val: 11.22},

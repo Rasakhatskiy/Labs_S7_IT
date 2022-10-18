@@ -1,6 +1,7 @@
 package database
 
 import (
+	"DBMS/utils"
 	"errors"
 	"reflect"
 )
@@ -21,21 +22,32 @@ func CreateTable(name string, types []reflect.Type, headers []string) Table {
 	}
 }
 
-func (t *Table) AddRecord(values []DBType) error {
+func (t *Table) CreateRecord(values []DBType) error {
 	for i, value := range values {
 		if reflect.TypeOf(value) != t.Types[i] {
 			return errors.New("Types mismatch")
 		}
 	}
 	t.Values = append(t.Values, values)
-
-	//for _, val := range t.Values[len(t.Values)-1].values {
-	//	fmt.Println(val.Value())
-	//}
-
 	return nil
 }
 
-//func (t *Table) GetRecord(i int) Record {
-//	return t.Values[i]
-//}
+func (t *Table) ReadRecord(i int) []DBType {
+	return t.Values[i]
+}
+
+func (t *Table) UpdateRecord(id int, values []DBType) error {
+	if id < 0 || id > len(t.Values) {
+		return &utils.InvalidIndexError{Id: id}
+	}
+	t.Values[id] = values
+	return nil
+}
+
+func (t *Table) DeleteRecord(id int) error {
+	if id < 0 || id > len(t.Values) {
+		return &utils.InvalidIndexError{Id: id}
+	}
+	t.Values = utils.RemoveIndex(t.Values, id)
+	return nil
+}
