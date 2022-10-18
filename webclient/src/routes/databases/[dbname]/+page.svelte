@@ -49,7 +49,7 @@
 										>
 											<a
 												class="absolute left-0 top-0 flex items-center justify-center w-full h-full"
-												href="/">{table}</a
+												href="/databases/{data.dbname}/{table}">{table}</a
 											>
 										</td>
 									</tr>
