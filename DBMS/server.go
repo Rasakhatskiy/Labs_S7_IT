@@ -47,7 +47,7 @@ func getUser(c echo.Context) error {
 
 func getDatabases(c echo.Context) error {
 	response := map[string]interface{}{
-		"databases": []string{"aboba", "amogus", "EEEEE"},
+		"databases": []string{"cats", "dogs", "EEEEE"},
 	}
 	return c.JSON(http.StatusOK, response)
 }
