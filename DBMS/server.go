@@ -36,6 +36,7 @@ func main() {
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
 
 	e.Logger.Fatal(e.Start(":1323"))
+
 }
 
 // e.GET("/users/:id", getUser)

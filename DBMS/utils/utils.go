@@ -1,9 +1,29 @@
 package utils
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func RemoveIndex[T any](s []T, index int) []T {
 	return append(s[:index], s[index+1:]...)
+}
+
+func Contains[T comparable](array []T, elem T) bool {
+	for _, el := range array {
+		if elem == el {
+			return true
+		}
+	}
+	return false
+}
+
+func Find[T comparable](array []T, elem T) (int, error) {
+	for i, el := range array {
+		if elem == el {
+			return i, nil
+		}
+	}
+	return -1, &ItemNotFoundError{}
 }
 
 type TableNotFoundError struct {
@@ -28,4 +48,20 @@ type InvalidIndexError struct {
 
 func (m *InvalidIndexError) Error() string {
 	return fmt.Sprintf("invalid index: %d", m.Id)
+}
+
+type ColumnDoesntExistsError struct {
+	TableName  string
+	ColumnName string
+}
+
+func (m *ColumnDoesntExistsError) Error() string {
+	return fmt.Sprintf("column '%s' does not exists in table '%s'", m.ColumnName, m.TableName)
+}
+
+type ItemNotFoundError struct {
+}
+
+func (m *ItemNotFoundError) Error() string {
+	return fmt.Sprintf("item not found")
 }

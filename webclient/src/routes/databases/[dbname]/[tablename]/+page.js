@@ -14,6 +14,7 @@ export async function load({ params }) {
 
 	return {
 		dbname,
+		tablename,
 		table
 	};
 }
