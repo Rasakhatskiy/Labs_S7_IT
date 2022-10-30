@@ -1,5 +1,7 @@
 package database
 
+import "reflect"
+
 type DBType interface {
 	Value() interface{}
 	TypeName() string
@@ -65,8 +67,10 @@ func (t TypeHTML) TypeName() string {
 	return "HTML Document"
 }
 
-func (t TypeHTML) Validate() bool {
+func (t TypeHTML) Validate(data string) error {
 	//todo: implement
+	// check and assign
+
 	panic("implement me")
 }
 
@@ -82,7 +86,17 @@ func (t TypeStringRange) TypeName() string {
 	return "String Interval"
 }
 
-func (t TypeStringRange) Validate() bool {
+func (t TypeStringRange) Validate(data string) error {
 	//todo: implement
+	// check and assign
 	panic("implement me")
 }
+
+var (
+	TypeIntegerTS     = reflect.TypeOf(TypeInteger{}).String()
+	TypeRealTS        = reflect.TypeOf(TypeReal{}).String()
+	TypeCharTS        = reflect.TypeOf(TypeChar{}).String()
+	TypeStringTS      = reflect.TypeOf(TypeString{}).String()
+	TypeHTMLTS        = reflect.TypeOf(TypeHTML{}).String()
+	TypeStringRangeTS = reflect.TypeOf(TypeStringRange{}).String()
+)

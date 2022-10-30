@@ -3,11 +3,13 @@ package main
 import (
 	"DBMS/database"
 	"DBMS/utils"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"io/fs"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func main() {
@@ -26,24 +28,121 @@ func main() {
 
 	e.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
 
-	e.POST("/users", func(c echo.Context) error { return nil })
-	e.GET("/users/:id", getUser)
 	e.GET("/databases", getDatabases)
 	e.GET("/databases/:name", getTables)
 	e.GET("/databases/:name/:table", getTable)
 
-	e.PUT("/users/:id", func(c echo.Context) error { return nil })
+	e.POST("/databases/:name/:table/new_row", addRow)
+	e.DELETE("/databases/:name/:table/:rowID", deleteRow)
+	e.PUT("/databases/:name/:table/:rowID", editRow)
+
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
 
 	e.Logger.Fatal(e.Start(":1323"))
 
 }
 
-// e.GET("/users/:id", getUser)
-func getUser(c echo.Context) error {
-	// User ID from path `users/:id`
-	id := c.Param("id")
-	return c.String(http.StatusOK, id)
+// e.POST("/databases/:name/:table/new_row", addRow)
+func addRow(c echo.Context) error {
+	data := new([]string)
+	err := c.Bind(data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+	fmt.Println(*data)
+
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	table, err := db.GetTable(tableName)
+
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	err = table.AddRecord(*data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request: "+err.Error())
+	}
+
+	err = db.SaveDatabase()
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "can not save database")
+	}
+
+	return c.JSON(http.StatusCreated, data)
+}
+
+// e.DELETE("/databases/:name/:table/:rowID", deleteRow)
+func deleteRow(c echo.Context) error {
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
+	index, _ := strconv.Atoi(c.Param("rowID"))
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	table, err := db.GetTable(tableName)
+
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	err = table.DeleteRecord(index)
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	err = db.SaveDatabase()
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "can not save database")
+	}
+
+	return c.String(http.StatusOK, "deleted")
+}
+
+//e.PUT("/databases/:name/:table/:rowID", editRow)
+func editRow(c echo.Context) error {
+	data := new([]string)
+	err := c.Bind(data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+	fmt.Println(*data)
+
+	return c.String(http.StatusOK, "modified")
 }
 
 func getDatabases(c echo.Context) error {

@@ -18,7 +18,7 @@ func registerGOB() {
 func (db *Database) SaveDatabase() error {
 	registerGOB()
 
-	f, err := os.Create(fmt.Sprintf("%s.gob", db.filePath))
+	f, err := os.Create(fmt.Sprintf("%s.gob", db.name))
 	if err != nil {
 		return err
 	}

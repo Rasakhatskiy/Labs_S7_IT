@@ -65,3 +65,12 @@ type ItemNotFoundError struct {
 func (m *ItemNotFoundError) Error() string {
 	return fmt.Sprintf("item not found")
 }
+
+type InvalidDataError struct {
+	Data    string
+	TypeStr string
+}
+
+func (m *InvalidDataError) Error() string {
+	return fmt.Sprintf("value '%s' is not of a type '%s'", m.Data, m.TypeStr)
+}

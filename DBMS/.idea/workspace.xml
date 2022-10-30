@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="routing+">
+      <change beforePath="$PROJECT_DIR$/.gob" beforeDir="false" afterPath="$PROJECT_DIR$/.gob" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EEEEE.gob" beforeDir="false" afterPath="$PROJECT_DIR$/EEEEE.gob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/dbio.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/dbio.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/table.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/type.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requests.http" beforeDir="false" afterPath="$PROJECT_DIR$/requests.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/routes/databases/[dbname]/[tablename]/+page.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/src/routes/databases/[dbname]/[tablename]/+page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webclient/src/routes/databases/[dbname]/[tablename]/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/src/routes/databases/[dbname]/[tablename]/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,14 +68,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build DBMS">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="DBMS" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build DBMS" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="DBMS" />
       <working_directory value="$PROJECT_DIR$" />
@@ -79,15 +75,6 @@
       <package value="DBMS" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="DBMS" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <configuration name="aboba | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/aboba.http" index="2" requestIdentifier="#2" runType="Run single request">
@@ -150,5 +137,16 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/server.go</url>
+          <line>140</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

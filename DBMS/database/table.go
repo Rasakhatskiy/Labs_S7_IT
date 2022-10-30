@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strconv"
 )
 
 type Table struct {
@@ -96,5 +97,69 @@ func (t *Table) DeleteRecord(id int) error {
 		return &utils.InvalidIndexError{Id: id}
 	}
 	t.Values = utils.RemoveIndex(t.Values, id)
+	return nil
+}
+
+func parseDataTypes(data, types []string) ([]DBType, error) {
+	var result []DBType
+
+	for i, str := range data {
+
+		var value DBType
+
+		switch types[i] {
+
+		case TypeIntegerTS:
+			parsed, err := strconv.ParseInt(str, 10, 64)
+			if err != nil {
+				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeIntegerTS}
+			}
+			value = &TypeInteger{Val: parsed}
+
+		case TypeRealTS:
+			parsed, err := strconv.ParseFloat(str, 64)
+			if err != nil {
+				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeRealTS}
+			}
+			value = &TypeReal{Val: parsed}
+
+		case TypeStringTS:
+			value = &TypeString{Val: str}
+
+		case TypeStringRangeTS:
+			strRange := TypeStringRange{}
+			err := strRange.Validate(str)
+			if err != nil {
+				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeStringRangeTS}
+			}
+			value = &strRange
+
+		case TypeHTMLTS:
+			html := TypeHTML{}
+			err := html.Validate(str)
+			if err != nil {
+				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeHTMLTS}
+			}
+			value = &html
+
+		case TypeCharTS:
+			if len(str) != 1 {
+				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeCharTS}
+			}
+			r := []rune(str)
+			value = &TypeChar{Val: r[0]}
+		}
+
+		result = append(result, value)
+	}
+	return result, nil
+}
+
+func (t *Table) AddRecord(data []string) error {
+	row, err := parseDataTypes(data, t.Types)
+	if err != nil {
+		return err
+	}
+	t.Values = append(t.Values, row)
 	return nil
 }

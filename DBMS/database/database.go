@@ -88,9 +88,9 @@ func (db *Database) GetTablesList() []string {
 }
 
 func (db *Database) GetTable(name string) (*Table, error) {
-	for _, table := range db.tables {
-		if table.Name == name {
-			return &table, nil
+	for i := range db.tables {
+		if db.tables[i].Name == name {
+			return &db.tables[i], nil
 		}
 	}
 	return nil, &utils.TableNotFoundError{TableName: name}
