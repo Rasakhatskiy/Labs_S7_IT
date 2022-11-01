@@ -7,7 +7,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"io/fs"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -142,6 +141,41 @@ func editRow(c echo.Context) error {
 	}
 	fmt.Println(*data)
 
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
+	index, _ := strconv.Atoi(c.Param("rowID"))
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	table, err := db.GetTable(tableName)
+
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	err = table.UpdateRecord(index, *data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request: "+err.Error())
+	}
+
+	err = db.SaveDatabase()
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "can not save database")
+	}
+
 	return c.String(http.StatusOK, "modified")
 }
 
@@ -184,12 +218,6 @@ func getTable(c echo.Context) error {
 	}
 
 	table, err := db.GetTable(tableName)
-
-	if err != nil {
-		log.Println(err.Error())
-	} else {
-		log.Println("Saved")
-	}
 
 	if err != nil {
 		switch err.(type) {

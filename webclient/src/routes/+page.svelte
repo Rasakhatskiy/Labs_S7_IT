@@ -1,3 +1,5 @@
+<!-- npm run dev -->
+
 <script>
 	export let data;
 </script>

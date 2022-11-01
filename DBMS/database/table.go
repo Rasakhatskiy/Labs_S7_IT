@@ -84,7 +84,17 @@ func (t *Table) ReadRecord(i int) []DBType {
 	return t.Values[i]
 }
 
-func (t *Table) UpdateRecord(id int, values []DBType) error {
+func (t *Table) UpdateRecord(id int, dataStr []string) error {
+	if id < 0 || id > len(t.Values) {
+		return &utils.InvalidIndexError{Id: id}
+	}
+
+	values, err := parseDataTypes(dataStr, t.Headers)
+
+	if err != nil {
+		return err
+	}
+
 	if id < 0 || id > len(t.Values) {
 		return &utils.InvalidIndexError{Id: id}
 	}

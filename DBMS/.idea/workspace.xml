@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="routing+">
-      <change beforePath="$PROJECT_DIR$/.gob" beforeDir="false" afterPath="$PROJECT_DIR$/.gob" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EEEEE.gob" beforeDir="false" afterPath="$PROJECT_DIR$/EEEEE.gob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/dbio.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/dbio.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/table.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/type.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requests.http" beforeDir="false" afterPath="$PROJECT_DIR$/requests.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/routes/databases/[dbname]/[tablename]/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/src/routes/databases/[dbname]/[tablename]/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webclient/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/src/routes/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,8 +137,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/server.go</url>
-          <line>140</line>
-          <option name="timeStamp" value="15" />
+          <line>139</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
