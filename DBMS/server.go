@@ -28,6 +28,8 @@ func main() {
 	e.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
 
 	e.GET("/databases", getDatabases)
+	e.POST("/databases/new_database", createDB)
+
 	e.GET("/databases/:name", getTables)
 	e.GET("/databases/:name/:table", getTable)
 
@@ -35,10 +37,78 @@ func main() {
 	e.DELETE("/databases/:name/:table/:rowID", deleteRow)
 	e.PUT("/databases/:name/:table/:rowID", editRow)
 
+	e.POST("/databases/:name/new_table", addTable)
+
 	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
 
 	e.Logger.Fatal(e.Start(":1323"))
 
+}
+
+// e.POST("/databases/new_database", createDB)
+func createDB(c echo.Context) error {
+	data := new(string)
+	err := c.Bind(data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+	fmt.Println(*data)
+
+	err = database.CreateDatabase(*data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+
+	return c.JSON(http.StatusCreated, data)
+}
+
+// e.POST("/databases/:name/new_table", addTable)
+func addTable(c echo.Context) error {
+	databaseName := c.Param("name")
+	data := new(TableJSON)
+
+	err := c.Bind(data)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+	fmt.Println(*data)
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	var headers []string
+	var types []string
+
+	for _, header := range data.Headers {
+		headers = append(headers, header.Name)
+		types = append(types, header.Type)
+	}
+
+	table := database.Table{
+		Name:    data.Name,
+		Types:   types,
+		Headers: headers,
+		Values:  nil,
+	}
+
+	err = db.AddTable(table)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+
+	err = db.SaveDatabase()
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "can not save database")
+	}
+
+	return c.JSON(http.StatusCreated, data)
 }
 
 // e.POST("/databases/:name/:table/new_row", addRow)
@@ -132,7 +202,7 @@ func deleteRow(c echo.Context) error {
 	return c.String(http.StatusOK, "deleted")
 }
 
-//e.PUT("/databases/:name/:table/:rowID", editRow)
+// e.PUT("/databases/:name/:table/:rowID", editRow)
 func editRow(c echo.Context) error {
 	data := new([]string)
 	err := c.Bind(data)
@@ -180,9 +250,7 @@ func editRow(c echo.Context) error {
 }
 
 func getDatabases(c echo.Context) error {
-	response := map[string]interface{}{
-		"databases": []string{"cats", "dogs", "EEEEE"},
-	}
+	response := database.ReadDatabasesPaths()
 	return c.JSON(http.StatusOK, response)
 }
 
@@ -228,9 +296,9 @@ func getTable(c echo.Context) error {
 		}
 	}
 
-	var headers []JsonTableHeader
+	var headers []TableHeaderJSON
 	for i, _ := range table.Headers {
-		headers = append(headers, JsonTableHeader{
+		headers = append(headers, TableHeaderJSON{
 			Name: table.Headers[i],
 			Type: table.Types[i],
 		})
@@ -244,7 +312,8 @@ func getTable(c echo.Context) error {
 		}
 	}
 
-	jt := JsonTable{
+	jt := TableJSON{
+		Name:    table.Name,
 		Headers: headers,
 		Values:  interValues,
 	}
@@ -252,20 +321,13 @@ func getTable(c echo.Context) error {
 	return c.JSON(http.StatusOK, jt)
 }
 
-type JsonTableHeader struct {
+type TableHeaderJSON struct {
 	Name string `json:"name"`
 	Type string `json:"type"`
 }
 
-type JsonTable struct {
-	Headers []JsonTableHeader `json:"headers"`
+type TableJSON struct {
+	Name    string            `json:"name"`
+	Headers []TableHeaderJSON `json:"headers"`
 	Values  [][]interface{}   `json:"values"`
 }
-
-//type JsonTable struct {
-//	Headers struct {
-//		Name []string `json:"name"`
-//		Type []string `json:"type"`
-//	} `json:"headers"`
-//	Values [][]database.DBType `json:"values"`
-//}

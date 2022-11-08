@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="routing+">
+      <change beforePath="$PROJECT_DIR$/.gob" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EEEEE.gob" beforeDir="false" afterPath="$PROJECT_DIR$/EEEEE.gob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/table.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amogus.gob" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/dbio.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/dbio.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases.json" beforeDir="false" afterPath="$PROJECT_DIR$/databases.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requests.http" beforeDir="false" afterPath="$PROJECT_DIR$/requests.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webclient/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../webclient/src/routes/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +28,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://Y:/Program Files/Go" />
+  <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -53,7 +57,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Maksym&quot;
+    &quot;last_opened_file_path&quot;: &quot;D:/Documents/Sharaga v.2/Vol_7/IT/Labs_S7_IT/DBMS&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -131,16 +135,5 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/server.go</url>
-          <line>139</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

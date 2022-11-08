@@ -18,7 +18,7 @@ func registerGOB() {
 func (db *Database) SaveDatabase() error {
 	registerGOB()
 
-	f, err := os.Create(fmt.Sprintf("%s.gob", db.name))
+	f, err := os.Create(fmt.Sprintf("databases/%s.gob", db.name))
 	if err != nil {
 		return err
 	}
@@ -39,7 +39,7 @@ func (db *Database) SaveDatabase() error {
 func LoadDatabase(filePath string) (*Database, error) {
 	registerGOB()
 
-	f, err := os.Open(fmt.Sprintf("%s.gob", filePath))
+	f, err := os.Open(fmt.Sprintf("databases/%s.gob", filePath))
 	if err != nil {
 		return nil, err
 	}
