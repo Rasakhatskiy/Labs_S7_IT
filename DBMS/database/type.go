@@ -67,14 +67,11 @@ func (t TypeHTML) TypeName() string {
 	return "HTML Document"
 }
 
-func (t TypeHTML) Validate(data string) error {
-	//todo: implement
+func (t *TypeHTML) Validate(data string) error {
+	//todo implement
 	// check and assign
 
-	//panic("implement me")
-
 	t.Val = data
-
 	return nil
 }
 
@@ -90,10 +87,9 @@ func (t TypeStringRange) TypeName() string {
 	return "String Interval"
 }
 
-func (t TypeStringRange) Validate(data string) error {
-	//todo: implement
-	// check and assign
-	panic("implement me")
+func (t *TypeStringRange) Validate(s1, s2 string) error {
+	t.Val = []string{s1, s2}
+	return nil
 }
 
 var (

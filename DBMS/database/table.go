@@ -89,7 +89,7 @@ func (t *Table) UpdateRecord(id int, dataStr []string) error {
 		return &utils.InvalidIndexError{Id: id}
 	}
 
-	values, err := parseDataTypes(dataStr, t.Headers)
+	values, err := t.parseDataTypes(dataStr)
 
 	if err != nil {
 		return err
@@ -110,14 +110,14 @@ func (t *Table) DeleteRecord(id int) error {
 	return nil
 }
 
-func parseDataTypes(data, types []string) ([]DBType, error) {
+func (t *Table) parseDataTypes(data []string) ([]DBType, error) {
 	var result []DBType
-
-	for i, str := range data {
-
+	typeOffset := 0
+	for i := 0; i < len(data); i++ {
+		str := data[i]
 		var value DBType
 
-		switch types[i] {
+		switch t.Types[i-typeOffset] {
 
 		case TypeIntegerTS:
 			parsed, err := strconv.ParseInt(str, 10, 64)
@@ -138,10 +138,14 @@ func parseDataTypes(data, types []string) ([]DBType, error) {
 
 		case TypeStringRangeTS:
 			strRange := TypeStringRange{}
-			err := strRange.Validate(str)
+			s1, s2 := str, data[i+1]
+
+			err := strRange.Validate(s1, s2)
 			if err != nil {
 				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeStringRangeTS}
 			}
+			i++
+			typeOffset++
 			value = &strRange
 
 		case TypeHTMLTS:
@@ -162,11 +166,12 @@ func parseDataTypes(data, types []string) ([]DBType, error) {
 
 		result = append(result, value)
 	}
+
 	return result, nil
 }
 
 func (t *Table) AddRecord(data []string) error {
-	row, err := parseDataTypes(data, t.Types)
+	row, err := t.parseDataTypes(data)
 	if err != nil {
 		return err
 	}

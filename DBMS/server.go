@@ -27,22 +27,21 @@ func main() {
 
 	e.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
 
+	// DATABASES
 	e.GET("/databases", getDatabases)
 	e.POST("/databases/new_database", createDB)
 
+	// TABLES
 	e.GET("/databases/:name", getTables)
 	e.GET("/databases/:name/:table", getTable)
-
-	e.POST("/databases/:name/:table/new_row", addRow)
-	e.DELETE("/databases/:name/:table/:rowID", deleteRow)
-	e.PUT("/databases/:name/:table/:rowID", editRow)
-
 	e.POST("/databases/:name/new_table", addTable)
 
-	e.DELETE("/users/:id", func(c echo.Context) error { return nil })
+	// ROW
+	e.POST("/databases/:name/:table/new_row", addRow)
+	e.POST("/databases/:name/:table/:rowID", editRow)
+	e.DELETE("/databases/:name/:table/:rowID", deleteRow)
 
 	e.Logger.Fatal(e.Start(":1323"))
-
 }
 
 // e.POST("/databases/new_database", createDB)
