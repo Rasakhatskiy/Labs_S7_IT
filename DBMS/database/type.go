@@ -1,6 +1,12 @@
 package database
 
-import "reflect"
+import (
+	"encoding/xml"
+	"errors"
+	"io/ioutil"
+	"reflect"
+	"strings"
+)
 
 type DBType interface {
 	Value() interface{}
@@ -67,9 +73,21 @@ func (t TypeHTML) TypeName() string {
 	return "HTML Document"
 }
 
+func IsValidXML(data []byte) bool {
+	return xml.Unmarshal(data, new(interface{})) == nil
+}
+
 func (t *TypeHTML) Validate(data string) error {
-	//todo implement
-	// check and assign
+	reader := strings.NewReader(data)
+
+	byteValue, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return errors.New("failed to read html data")
+	}
+
+	if !IsValidXML(byteValue) {
+		return errors.New("invalid html input")
+	}
 
 	t.Val = data
 	return nil
@@ -88,6 +106,9 @@ func (t TypeStringRange) TypeName() string {
 }
 
 func (t *TypeStringRange) Validate(s1, s2 string) error {
+	if s1 > s2 {
+		return errors.New("invalid string range")
+	}
 	t.Val = []string{s1, s2}
 	return nil
 }

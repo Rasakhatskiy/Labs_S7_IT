@@ -142,7 +142,7 @@ func (t *Table) parseDataTypes(data []string) ([]DBType, error) {
 
 			err := strRange.Validate(s1, s2)
 			if err != nil {
-				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeStringRangeTS}
+				return nil, err
 			}
 			i++
 			typeOffset++
@@ -152,7 +152,7 @@ func (t *Table) parseDataTypes(data []string) ([]DBType, error) {
 			html := TypeHTML{}
 			err := html.Validate(str)
 			if err != nil {
-				return nil, &utils.InvalidDataError{Data: str, TypeStr: TypeHTMLTS}
+				return nil, err
 			}
 			value = &html
 
