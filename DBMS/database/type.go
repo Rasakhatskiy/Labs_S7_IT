@@ -71,7 +71,11 @@ func (t TypeHTML) Validate(data string) error {
 	//todo: implement
 	// check and assign
 
-	panic("implement me")
+	//panic("implement me")
+
+	t.Val = data
+
+	return nil
 }
 
 type TypeStringRange struct {
