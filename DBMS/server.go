@@ -35,6 +35,7 @@ func main() {
 	e.GET("/databases/:name", getTables)
 	e.GET("/databases/:name/:table", getTable)
 	e.POST("/databases/:name/new_table", addTable)
+	e.GET("/databases/:name/join", getJoinedTable)
 
 	// ROW
 	e.POST("/databases/:name/:table/new_row", addRow)
@@ -271,6 +272,56 @@ func getTables(c echo.Context) error {
 }
 
 func getTable(c echo.Context) error {
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	table, err := db.GetTable(tableName)
+
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	var headers []TableHeaderJSON
+	for i, _ := range table.Headers {
+		headers = append(headers, TableHeaderJSON{
+			Name: table.Headers[i],
+			Type: table.Types[i],
+		})
+	}
+
+	interValues := make([][]interface{}, len(table.Values))
+	for i, _ := range interValues {
+		interValues[i] = make([]interface{}, len(table.Values[i]))
+		for j, _ := range interValues[i] {
+			interValues[i][j] = table.Values[i][j].Value()
+		}
+	}
+
+	jt := TableJSON{
+		Name:    table.Name,
+		Headers: headers,
+		Values:  interValues,
+	}
+
+	return c.JSON(http.StatusOK, jt)
+}
+
+func getJoinedTable(c echo.Context) error {
 	databaseName := c.Param("name")
 	tableName := c.Param("table")
 
