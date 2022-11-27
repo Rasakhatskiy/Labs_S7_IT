@@ -35,6 +35,7 @@ func main() {
 	e.GET("/databases/:name", getTables)
 	e.GET("/databases/:name/:table", getTable)
 	e.POST("/databases/:name/new_table", addTable)
+	e.GET("/databases/:name/join_tables", getJoinTablesData)
 
 	// ROW
 	e.POST("/databases/:name/:table/new_row", addRow)
@@ -318,6 +319,22 @@ func getTable(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, jt)
+}
+
+func getJoinTablesData(c echo.Context) error {
+	databaseName := c.Param("name")
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *fs.PathError:
+			return c.JSON(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	jsonInfo := db.GetJSONInfo()
+	return c.JSON(http.StatusOK, jsonInfo)
 }
 
 type TableHeaderJSON struct {

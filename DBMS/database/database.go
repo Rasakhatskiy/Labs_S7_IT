@@ -144,3 +144,19 @@ func CreateDatabase(name string) error {
 	err := db.SaveDatabase()
 	return err
 }
+
+func (db *Database) GetJSONInfo() DatabaseInfoJSON {
+	var infoJSON DatabaseInfoJSON
+	for _, table := range db.tables {
+		var tableSJON TableJSON
+		tableSJON.Name = table.Name
+		for i := range table.Headers {
+			tableSJON.Headers = append(tableSJON.Headers, TableHeaderJSON{
+				Name: table.Headers[i],
+				Type: table.Types[i],
+			})
+		}
+		infoJSON.Tables = append(infoJSON.Tables, tableSJON)
+	}
+	return infoJSON
+}

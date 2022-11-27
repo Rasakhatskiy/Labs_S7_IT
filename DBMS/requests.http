@@ -9,7 +9,8 @@ GET localhost:1323/databases/EEEEE
 ###
 GET localhost:1323/databases/second/to_test
 
-
+###
+GET localhost:1323/databases/animals/join_tables
 
 
 
