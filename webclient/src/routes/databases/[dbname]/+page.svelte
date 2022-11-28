@@ -59,6 +59,13 @@
 					</div>
 				</div>
 			</div>
+			<a class="w-full block"
+			href="/databases/{data.dbname}/join_tables">
+				<button class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded w-full">
+					Join tables
+				</button>
+			</a>
+			
 			<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 				Create new table
 			</button>
