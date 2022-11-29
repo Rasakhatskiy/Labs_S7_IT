@@ -41,6 +41,10 @@ func JoinTables(t1, t2 Table, column1, column2 string) (*Table, error) {
 		return nil, &utils.ColumnDoesntExistsError{TableName: t2.Name, ColumnName: column2}
 	}
 
+	if t1.Name == t2.Name {
+		return nil, &utils.SameTableError{}
+	}
+
 	column1Index, err := utils.Find(t1.Headers, column1)
 	column2Index, err := utils.Find(t2.Headers, column2)
 	if err != nil {
@@ -55,7 +59,8 @@ func JoinTables(t1, t2 Table, column1, column2 string) (*Table, error) {
 	for _, row1 := range t1.Values {
 		for _, row2 := range t2.Values {
 			if row1[column1Index] == row2[column2Index] {
-				values = append(values, row1, utils.RemoveIndex(row2, column2Index))
+				noIndex := utils.RemoveIndex(row2, column2Index)
+				values = append(values, append(row1, noIndex...))
 			}
 		}
 	}

@@ -36,6 +36,7 @@ func main() {
 	e.GET("/databases/:name/:table", getTable)
 	e.POST("/databases/:name/new_table", addTable)
 	e.GET("/databases/:name/join_tables", getJoinTablesData)
+	e.GET("/databases/:name/joined_tables", getJoinedTables)
 
 	// ROW
 	e.POST("/databases/:name/:table/new_row", addRow)
@@ -65,7 +66,7 @@ func createDB(c echo.Context) error {
 // e.POST("/databases/:name/new_table", addTable)
 func addTable(c echo.Context) error {
 	databaseName := c.Param("name")
-	data := new(TableJSON)
+	data := new(database.TableJSONValues)
 
 	err := c.Bind(data)
 	if err != nil {
@@ -271,6 +272,30 @@ func getTables(c echo.Context) error {
 	return c.JSON(http.StatusOK, tables)
 }
 
+func tableToJson(table *database.Table) *database.TableJSONValues {
+	var headers []database.TableHeaderJSON
+	for i, _ := range table.Headers {
+		headers = append(headers, database.TableHeaderJSON{
+			Name: table.Headers[i],
+			Type: table.Types[i],
+		})
+	}
+
+	interValues := make([][]interface{}, len(table.Values))
+	for i, _ := range interValues {
+		interValues[i] = make([]interface{}, len(table.Values[i]))
+		for j, _ := range interValues[i] {
+			interValues[i][j] = table.Values[i][j].Value()
+		}
+	}
+
+	return &database.TableJSONValues{
+		Name:    table.Name,
+		Headers: headers,
+		Values:  interValues,
+	}
+}
+
 func getTable(c echo.Context) error {
 	databaseName := c.Param("name")
 	tableName := c.Param("table")
@@ -286,7 +311,6 @@ func getTable(c echo.Context) error {
 	}
 
 	table, err := db.GetTable(tableName)
-
 	if err != nil {
 		switch err.(type) {
 		case *utils.TableNotFoundError:
@@ -296,29 +320,7 @@ func getTable(c echo.Context) error {
 		}
 	}
 
-	var headers []TableHeaderJSON
-	for i, _ := range table.Headers {
-		headers = append(headers, TableHeaderJSON{
-			Name: table.Headers[i],
-			Type: table.Types[i],
-		})
-	}
-
-	interValues := make([][]interface{}, len(table.Values))
-	for i, _ := range interValues {
-		interValues[i] = make([]interface{}, len(table.Values[i]))
-		for j, _ := range interValues[i] {
-			interValues[i][j] = table.Values[i][j].Value()
-		}
-	}
-
-	jt := TableJSON{
-		Name:    table.Name,
-		Headers: headers,
-		Values:  interValues,
-	}
-
-	return c.JSON(http.StatusOK, jt)
+	return c.JSON(http.StatusOK, tableToJson(table))
 }
 
 func getJoinedTable(c echo.Context) error {
@@ -336,7 +338,6 @@ func getJoinedTable(c echo.Context) error {
 	}
 
 	table, err := db.GetTable(tableName)
-
 	if err != nil {
 		switch err.(type) {
 		case *utils.TableNotFoundError:
@@ -346,29 +347,7 @@ func getJoinedTable(c echo.Context) error {
 		}
 	}
 
-	var headers []TableHeaderJSON
-	for i, _ := range table.Headers {
-		headers = append(headers, TableHeaderJSON{
-			Name: table.Headers[i],
-			Type: table.Types[i],
-		})
-	}
-
-	interValues := make([][]interface{}, len(table.Values))
-	for i, _ := range interValues {
-		interValues[i] = make([]interface{}, len(table.Values[i]))
-		for j, _ := range interValues[i] {
-			interValues[i][j] = table.Values[i][j].Value()
-		}
-	}
-
-	jt := TableJSON{
-		Name:    table.Name,
-		Headers: headers,
-		Values:  interValues,
-	}
-
-	return c.JSON(http.StatusOK, jt)
+	return c.JSON(http.StatusOK, tableToJson(table))
 }
 
 func getJoinTablesData(c echo.Context) error {
@@ -387,13 +366,49 @@ func getJoinTablesData(c echo.Context) error {
 	return c.JSON(http.StatusOK, jsonInfo)
 }
 
-type TableHeaderJSON struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
-}
+func getJoinedTables(c echo.Context) error {
+	databaseName := c.Param("name")
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *fs.PathError:
+			return c.JSON(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
 
-type TableJSON struct {
-	Name    string            `json:"name"`
-	Headers []TableHeaderJSON `json:"headers"`
-	Values  [][]interface{}   `json:"values"`
+	t1 := c.QueryParam("t1")
+	table1, err := db.GetTable(t1)
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	c1 := c.QueryParam("c1")
+
+	t2 := c.QueryParam("t2")
+	table2, err := db.GetTable(t2)
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	c2 := c.QueryParam("c2")
+
+	resTable, err := database.JoinTables(*table1, *table2, c1, c2)
+
+	if err != nil {
+		return c.String(http.StatusNotFound, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, tableToJson(resTable))
 }

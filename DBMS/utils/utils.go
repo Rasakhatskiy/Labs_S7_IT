@@ -74,3 +74,10 @@ type InvalidDataError struct {
 func (m *InvalidDataError) Error() string {
 	return fmt.Sprintf("value '%s' is not of a type '%s'", m.Data, m.TypeStr)
 }
+
+type SameTableError struct {
+}
+
+func (m *SameTableError) Error() string {
+	return fmt.Sprintf("can't join same table")
+}
