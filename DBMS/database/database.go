@@ -13,8 +13,8 @@ import (
 const DBNamesListJson string = "databases.json"
 
 type Database struct {
-	name   string
-	tables []Table
+	Name   string
+	Tables []Table
 }
 
 type DBPathJSON struct {
@@ -98,37 +98,37 @@ func createTempDB() *Database {
 	t3.Name = "table_03"
 
 	return &Database{
-		name:   "amogus",
-		tables: []Table{table, t2, t3},
+		Name:   "amogus",
+		Tables: []Table{table, t2, t3},
 	}
 }
 
 func (db *Database) GetTablesList() []string {
 	var tables []string
-	for _, table := range db.tables {
+	for _, table := range db.Tables {
 		tables = append(tables, table.Name)
 	}
 	return tables
 }
 
 func (db *Database) GetTable(name string) (*Table, error) {
-	for i := range db.tables {
-		if db.tables[i].Name == name {
-			return &db.tables[i], nil
+	for i := range db.Tables {
+		if db.Tables[i].Name == name {
+			return &db.Tables[i], nil
 		}
 	}
 	return nil, &utils.TableNotFoundError{TableName: name}
 }
 
 func (db *Database) AddTable(table Table) error {
-	db.tables = append(db.tables, table)
+	db.Tables = append(db.Tables, table)
 	return nil
 }
 
 func CreateDatabase(name string) error {
 	db := Database{
-		name:   name,
-		tables: nil,
+		Name:   name,
+		Tables: nil,
 	}
 
 	pathEntry := DBPathJSON{
@@ -147,7 +147,7 @@ func CreateDatabase(name string) error {
 
 func (db *Database) GetJSONInfo() DatabaseInfoJSON {
 	var infoJSON DatabaseInfoJSON
-	for _, table := range db.tables {
+	for _, table := range db.Tables {
 		var tableSJON TableJSON
 		tableSJON.Name = table.Name
 		for i := range table.Headers {

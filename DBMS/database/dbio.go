@@ -18,18 +18,18 @@ func registerGOB() {
 func (db *Database) SaveDatabase() error {
 	registerGOB()
 
-	f, err := os.Create(fmt.Sprintf("databases/%s.gob", db.name))
+	f, err := os.Create(fmt.Sprintf("databases/%s.gob", db.Name))
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
 	enc := gob.NewEncoder(f)
-	if err := enc.Encode(db.name); err != nil {
+	if err := enc.Encode(db.Name); err != nil {
 		return err
 	}
 
-	if err := enc.Encode(db.tables); err != nil {
+	if err := enc.Encode(db.Tables); err != nil {
 		return err
 	}
 
@@ -48,11 +48,11 @@ func LoadDatabase(filePath string) (*Database, error) {
 	var db Database
 
 	dec := gob.NewDecoder(f)
-	if err := dec.Decode(&db.name); err != nil {
+	if err := dec.Decode(&db.Name); err != nil {
 		return nil, err
 	}
 
-	if err := dec.Decode(&db.tables); err != nil {
+	if err := dec.Decode(&db.Tables); err != nil {
 		return nil, err
 	}
 
