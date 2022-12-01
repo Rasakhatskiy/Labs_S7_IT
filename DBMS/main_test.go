@@ -73,6 +73,36 @@ func TestAddTable(t *testing.T) {
 	}
 }
 
+func TestGetTable(t *testing.T) {
+	db, err := database.LoadDatabase(testDBName)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	table, err := db.GetTable("dogs")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	if table.Name != "dogs" || table.Headers[2] != "owner_id" {
+		t.Fatalf("read wrong table")
+	}
+}
+
+func TestAddRow(t *testing.T) {
+	db, err := database.LoadDatabase(testDBName)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	table, err := db.GetTable("dogs")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	table.AddRecord("")
+}
+
 // TestHelloName calls greetings.Hello with a name, checking
 // for a valid return value.
 func TestHelloName(t *testing.T) {
