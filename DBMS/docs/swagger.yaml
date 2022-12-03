@@ -1,0 +1,122 @@
+consumes:
+- application/json
+definitions:
+  database.TableHeaderJSON:
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  database.TableJSONValues:
+    properties:
+      headers:
+        items:
+          $ref: '#/definitions/database.TableHeaderJSON'
+        type: array
+      name:
+        type: string
+      values:
+        items:
+          items: {}
+          type: array
+        type: array
+    type: object
+host: localhost:1323
+info:
+  contact:
+    email: saharok.maks@gmail.com
+    name: Максим РАсахацький ТТП-42
+  description: "\U0001F640"
+  title: My database management system
+  version: "1.0"
+paths:
+  /databases:
+    get:
+      consumes:
+      - application/json
+      description: Get databases list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Get databases list
+      tags:
+      - database
+  /databases/{name}/{table}:
+    get:
+      consumes:
+      - application/json
+      description: get table by name
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      - description: Table name
+        in: path
+        name: table
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/database.TableJSONValues'
+      summary: Get a table
+      tags:
+      - table
+  /databases/{name}/new_table:
+    post:
+      consumes:
+      - application/json
+      description: Create new table by name
+      parameters:
+      - description: Table name
+        in: path
+        name: name
+        type: string
+      - description: table values
+        in: body
+        name: table
+        schema:
+          $ref: '#/definitions/database.TableJSONValues'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/database.TableJSONValues'
+      summary: Create new table
+      tags:
+      - table
+  /databases/new_database:
+    post:
+      consumes:
+      - application/json
+      description: Create database with given name
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create a database
+      tags:
+      - database
+produces:
+- application/json
+swagger: "2.0"

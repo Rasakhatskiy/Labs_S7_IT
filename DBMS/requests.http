@@ -1,21 +1,33 @@
-GET localhost:1323/users/1
-
-###
+### GET databases list
 GET localhost:1323/databases
 
-###
-GET localhost:1323/databases/EEEEE
+### Get tables from database Animals
+GET localhost:1323/databases/Animals
 
 ###
-GET localhost:1323/databases/second/to_test
+GET localhost:1323/databases/Animals/Dogs
 
 ###
 GET localhost:1323/databases/animals/join_tables
 
+### GET joined table by column 'owner_id' from table 'Dogs' and 'id' from table 'owners'
+GET localhost:1323/databases/animals/joined_tables?t1=Dogs&t2=owners&c1=owner_id&c2=id
+
+### POST new owner
+POST localhost:1323/databases/animals/owners/new_row
+Content-Type: application/json
+
+["Andrii","4","110","G"]
+
+### DELETE 5th row in table owners
+DELETE localhost:1323/databases/animals/owners/5
 
 
+### PUT edit owner
+PUT localhost:1323/databases/animals/owners/4
+Content-Type: application/json
 
-
+["Denys","4","110","F"]
 
 ### GET request with a header
 GET https://httpbin.org/ip

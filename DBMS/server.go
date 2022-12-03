@@ -5,48 +5,56 @@ import (
 	"DBMS/utils"
 	"fmt"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"io/fs"
 	"net/http"
 	"strconv"
 )
 
-func main() {
-	//createTestJson()
+// @Summary      Get a table
+// @Description  get table by name
+// @Tags         table
+// @Accept       json
+// @Produce      json
+// @Param        name path string false "Database name"
+// @Param        table path string false "Table name"
+// @Success      200  {object}  database.TableJSONValues
+// @Router       /databases/{name}/{table} [get]
+func getTable(c echo.Context) error {
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
 
-	e := echo.New()
-	e.HTTPErrorHandler = func(err error, c echo.Context) {
-		_ = c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"code":    500,
-			"message": err.Error(),
-		})
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.JSON(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
 	}
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
 
-	e.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
+	table, err := db.GetTable(tableName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
 
-	// DATABASES
-	e.GET("/databases", getDatabases)
-	e.POST("/databases/new_database", createDB)
-
-	// TABLES
-	e.GET("/databases/:name", getTables)
-	e.GET("/databases/:name/:table", getTable)
-	e.POST("/databases/:name/new_table", addTable)
-	e.GET("/databases/:name/join_tables", getJoinTablesData)
-	e.GET("/databases/:name/joined_tables", getJoinedTables)
-
-	// ROW
-	e.POST("/databases/:name/:table/new_row", addRow)
-	e.POST("/databases/:name/:table/:rowID", editRow)
-	e.DELETE("/databases/:name/:table/:rowID", deleteRow)
-
-	e.Logger.Fatal(e.Start(":1323"))
+	return c.JSON(http.StatusOK, tableToJson(table))
 }
 
 // e.POST("/databases/new_database", createDB)
+// @Summary      Create a database
+// @Description  Create database with given name
+// @Tags         database
+// @Accept       json
+// @Produce      json
+// @Param        name path string false "Database name"
+// @Success      200  {object}  string
+// @Router       /databases/new_database [post]
 func createDB(c echo.Context) error {
 	data := new(string)
 	err := c.Bind(data)
@@ -63,7 +71,17 @@ func createDB(c echo.Context) error {
 	return c.JSON(http.StatusCreated, data)
 }
 
+// todo
 // e.POST("/databases/:name/new_table", addTable)
+// @Summary      Create new table
+// @Description  Create new table by name
+// @Tags         table
+// @Accept       json
+// @Produce      json
+// @Param        name path string false "Table name"
+// @Param        table body database.TableJSONValues false "table values"
+// @Success      200  {object}  database.TableJSONValues
+// @Router       /databases/{name}/new_table [post]
 func addTable(c echo.Context) error {
 	databaseName := c.Param("name")
 	data := new(database.TableJSONValues)
@@ -250,6 +268,13 @@ func editRow(c echo.Context) error {
 	return c.String(http.StatusOK, "modified")
 }
 
+// @Summary      Get databases list
+// @Description  Get databases list
+// @Tags         database
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  []string
+// @Router       /databases [get]
 func getDatabases(c echo.Context) error {
 	response := database.ReadDatabasesPaths()
 	return c.JSON(http.StatusOK, response)
@@ -294,33 +319,6 @@ func tableToJson(table *database.Table) *database.TableJSONValues {
 		Headers: headers,
 		Values:  interValues,
 	}
-}
-
-func getTable(c echo.Context) error {
-	databaseName := c.Param("name")
-	tableName := c.Param("table")
-
-	db, err := database.LoadDatabase(databaseName)
-	if err != nil {
-		switch err.(type) {
-		case *utils.DatabaseNotFoundError:
-			return c.String(http.StatusNotFound, err.Error())
-		default:
-			return err
-		}
-	}
-
-	table, err := db.GetTable(tableName)
-	if err != nil {
-		switch err.(type) {
-		case *utils.TableNotFoundError:
-			return c.String(http.StatusNotFound, err.Error())
-		default:
-			return err
-		}
-	}
-
-	return c.JSON(http.StatusOK, tableToJson(table))
 }
 
 func getJoinedTable(c echo.Context) error {
