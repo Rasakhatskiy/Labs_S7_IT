@@ -8,16 +8,16 @@ import (
 	"net/http"
 )
 
-// @title My database management system
-// @version 1.0
-// @description 🙀
+//	@title			My database management system
+//	@version		1.0
+//	@description	🙀
 
-// @contact.name Максим РАсахацький ТТП-42
-// @contact.email saharok.maks@gmail.com
+//	@contact.name	Максим РАсахацький ТТП-42
+//	@contact.email	saharok.maks@gmail.com
 
-// @host localhost:1323
-// @accept json
-// @produce json
+// @host		localhost:1323
+// @accept		json
+// @produce	json
 func main() {
 	//createTestJson()
 
@@ -39,6 +39,7 @@ func main() {
 	// DATABASES
 	e.GET("/databases", getDatabases)
 	e.POST("/databases/new_database", createDB)
+	e.DELETE("/databases/:name", deleteDB)
 
 	// TABLES
 	e.GET("/databases/:name", getTables)
@@ -46,6 +47,7 @@ func main() {
 	e.POST("/databases/:name/new_table", addTable)
 	e.GET("/databases/:name/join_tables", getJoinTablesData)
 	e.GET("/databases/:name/joined_tables", getJoinedTables)
+	e.DELETE("/databases/:name/:table", deleteTable)
 
 	// ROW
 	e.POST("/databases/:name/:table/new_row", addRow)

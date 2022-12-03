@@ -1,5 +1,3 @@
-consumes:
-- application/json
 definitions:
   database.TableHeaderJSON:
     properties:
@@ -22,14 +20,8 @@ definitions:
           type: array
         type: array
     type: object
-host: localhost:1323
 info:
-  contact:
-    email: saharok.maks@gmail.com
-    name: Максим РАсахацький ТТП-42
-  description: "\U0001F640"
-  title: My database management system
-  version: "1.0"
+  contact: {}
 paths:
   /databases:
     get:
@@ -48,7 +40,71 @@ paths:
       summary: Get databases list
       tags:
       - database
+  /databases/{name}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete database
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete database
+      tags:
+      - database
+    get:
+      consumes:
+      - application/json
+      description: Get tables list
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Get tables list
+      tags:
+      - database
   /databases/{name}/{table}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete table
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      - description: Table name
+        in: path
+        name: table
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete table
+      tags:
+      - table
     get:
       consumes:
       - application/json
@@ -70,6 +126,135 @@ paths:
           schema:
             $ref: '#/definitions/database.TableJSONValues'
       summary: Get a table
+      tags:
+      - table
+  /databases/{name}/{table}/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a row
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      - description: Table name
+        in: path
+        name: table
+        type: string
+      - description: row id
+        in: path
+        name: rowID
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/database.TableJSONValues'
+      summary: Delete a row
+      tags:
+      - table
+    put:
+      consumes:
+      - application/json
+      description: Delete a row
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      - description: Table name
+        in: path
+        name: table
+        type: string
+      - description: row id
+        in: path
+        name: rowID
+        type: integer
+      - description: Row to add
+        in: body
+        name: row
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/database.TableJSONValues'
+      summary: Delete a row
+      tags:
+      - table
+  /databases/{name}/{table}/new_row:
+    post:
+      consumes:
+      - application/json
+      description: Add new row
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      - description: Table name
+        in: path
+        name: table
+        type: string
+      - description: Row to add
+        in: body
+        name: row
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/database.TableJSONValues'
+      summary: Add new row
+      tags:
+      - table
+  /databases/{name}/joined_tables:
+    get:
+      consumes:
+      - application/json
+      description: Get table result of inner join two tables
+      parameters:
+      - description: Database name
+        in: path
+        name: name
+        type: string
+      - description: First table
+        in: query
+        name: t1
+        type: string
+      - description: Second table
+        in: query
+        name: t2
+        type: string
+      - description: Column from first table
+        in: query
+        name: c1
+        type: string
+      - description: Column from second table
+        in: query
+        name: c2
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/database.TableJSONValues'
+      summary: Get joined table
       tags:
       - table
   /databases/{name}/new_table:
@@ -117,6 +302,4 @@ paths:
       summary: Create a database
       tags:
       - database
-produces:
-- application/json
 swagger: "2.0"

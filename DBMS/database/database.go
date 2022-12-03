@@ -3,6 +3,7 @@ package database
 import (
 	"DBMS/utils"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -120,6 +121,16 @@ func (db *Database) GetTable(name string) (*Table, error) {
 	return nil, &utils.TableNotFoundError{TableName: name}
 }
 
+func (db *Database) DeleteTable(name string) error {
+	for i := range db.Tables {
+		if db.Tables[i].Name == name {
+			utils.RemoveIndex(db.Tables, i)
+			return nil
+		}
+	}
+	return &utils.TableNotFoundError{TableName: name}
+}
+
 func (db *Database) AddTable(table Table) error {
 	db.Tables = append(db.Tables, table)
 	return nil
@@ -159,4 +170,25 @@ func (db *Database) GetJSONInfo() DatabaseInfoJSON {
 		infoJSON.Tables = append(infoJSON.Tables, tableSJON)
 	}
 	return infoJSON
+}
+
+func DeleteDatabase(name string) error {
+	db := Database{
+		Name:   name,
+		Tables: nil,
+	}
+	dbpaths := ReadDatabasesPaths()
+	pathEntry := DBPathJSON{
+		Name: name,
+	}
+	if !utils.Contains(dbpaths, pathEntry) {
+		return errors.New("no such database")
+	}
+
+	i, _ := utils.Find(dbpaths, pathEntry)
+	utils.RemoveIndex(dbpaths, i)
+	SaveDatabasesPaths(dbpaths)
+
+	err := db.SaveDatabase()
+	return err
 }

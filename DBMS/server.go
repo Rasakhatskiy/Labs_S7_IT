@@ -10,15 +10,15 @@ import (
 	"strconv"
 )
 
-// @Summary      Get a table
-// @Description  get table by name
-// @Tags         table
-// @Accept       json
-// @Produce      json
-// @Param        name path string false "Database name"
-// @Param        table path string false "Table name"
-// @Success      200  {object}  database.TableJSONValues
-// @Router       /databases/{name}/{table} [get]
+//	@Summary		Get a table
+//	@Description	get table by name
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Param			table	path		string	false	"Table name"
+//	@Success		200		{object}	database.TableJSONValues
+//	@Router			/databases/{name}/{table} [get]
 func getTable(c echo.Context) error {
 	databaseName := c.Param("name")
 	tableName := c.Param("table")
@@ -47,14 +47,15 @@ func getTable(c echo.Context) error {
 }
 
 // e.POST("/databases/new_database", createDB)
-// @Summary      Create a database
-// @Description  Create database with given name
-// @Tags         database
-// @Accept       json
-// @Produce      json
-// @Param        name path string false "Database name"
-// @Success      200  {object}  string
-// @Router       /databases/new_database [post]
+//
+//	@Summary		Create a database
+//	@Description	Create database with given name
+//	@Tags			database
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Success		200		{object}	string
+//	@Router			/databases/new_database [post]
 func createDB(c echo.Context) error {
 	data := new(string)
 	err := c.Bind(data)
@@ -71,17 +72,17 @@ func createDB(c echo.Context) error {
 	return c.JSON(http.StatusCreated, data)
 }
 
-// todo
 // e.POST("/databases/:name/new_table", addTable)
-// @Summary      Create new table
-// @Description  Create new table by name
-// @Tags         table
-// @Accept       json
-// @Produce      json
-// @Param        name path string false "Table name"
-// @Param        table body database.TableJSONValues false "table values"
-// @Success      200  {object}  database.TableJSONValues
-// @Router       /databases/{name}/new_table [post]
+//
+//	@Summary		Create new table
+//	@Description	Create new table by name
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string						false	"Table name"
+//	@Param			table	body		database.TableJSONValues	false	"table values"
+//	@Success		200		{object}	database.TableJSONValues
+//	@Router			/databases/{name}/new_table [post]
 func addTable(c echo.Context) error {
 	databaseName := c.Param("name")
 	data := new(database.TableJSONValues)
@@ -131,6 +132,17 @@ func addTable(c echo.Context) error {
 }
 
 // e.POST("/databases/:name/:table/new_row", addRow)
+//
+//	@Summary		Add new row
+//	@Description	Add new row
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string		false	"Database name"
+//	@Param			table	path		string		false	"Table name"
+//	@Param			row		body		[]string	false	"Row to add"
+//	@Success		200		{object}	database.TableJSONValues
+//	@Router			/databases/{name}/{table}/new_row [post]
 func addRow(c echo.Context) error {
 	data := new([]string)
 	err := c.Bind(data)
@@ -177,6 +189,17 @@ func addRow(c echo.Context) error {
 }
 
 // e.DELETE("/databases/:name/:table/:rowID", deleteRow)
+//
+//	@Summary		Delete a row
+//	@Description	Delete a row
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Param			table	path		string	false	"Table name"
+//	@Param			rowID	path		int		false	"row id"
+//	@Success		200		{object}	database.TableJSONValues
+//	@Router			/databases/{name}/{table}/{id} [delete]
 func deleteRow(c echo.Context) error {
 	databaseName := c.Param("name")
 	tableName := c.Param("table")
@@ -222,6 +245,18 @@ func deleteRow(c echo.Context) error {
 }
 
 // e.PUT("/databases/:name/:table/:rowID", editRow)
+//
+//	@Summary		Delete a row
+//	@Description	Delete a row
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string		false	"Database name"
+//	@Param			table	path		string		false	"Table name"
+//	@Param			rowID	path		int			false	"row id"
+//	@Param			row		body		[]string	false	"Row to add"
+//	@Success		200		{object}	database.TableJSONValues
+//	@Router			/databases/{name}/{table}/{id} [put]
 func editRow(c echo.Context) error {
 	data := new([]string)
 	err := c.Bind(data)
@@ -268,18 +303,26 @@ func editRow(c echo.Context) error {
 	return c.String(http.StatusOK, "modified")
 }
 
-// @Summary      Get databases list
-// @Description  Get databases list
-// @Tags         database
-// @Accept       json
-// @Produce      json
-// @Success      200  {object}  []string
-// @Router       /databases [get]
+//	@Summary		Get databases list
+//	@Description	Get databases list
+//	@Tags			database
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	[]string
+//	@Router			/databases [get]
 func getDatabases(c echo.Context) error {
 	response := database.ReadDatabasesPaths()
 	return c.JSON(http.StatusOK, response)
 }
 
+//	@Summary		Get tables list
+//	@Description	Get tables list
+//	@Tags			database
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Success		200		{object}	[]string
+//	@Router			/databases/{name} [get]
 func getTables(c echo.Context) error {
 	databaseName := c.Param("name")
 	db, err := database.LoadDatabase(databaseName)
@@ -364,6 +407,18 @@ func getJoinTablesData(c echo.Context) error {
 	return c.JSON(http.StatusOK, jsonInfo)
 }
 
+//	@Summary		Get joined table
+//	@Description	Get table result of inner join two tables
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Param			t1		query		string	false	"First table"
+//	@Param			t2		query		string	false	"Second table"
+//	@Param			c1		query		string	false	"Column from first table"
+//	@Param			c2		query		string	false	"Column from second table"
+//	@Success		200		{object}	database.TableJSONValues
+//	@Router			/databases/{name}/joined_tables [get]
 func getJoinedTables(c echo.Context) error {
 	databaseName := c.Param("name")
 	db, err := database.LoadDatabase(databaseName)
@@ -409,4 +464,63 @@ func getJoinedTables(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, tableToJson(resTable))
+}
+
+//	@Summary		Delete database
+//	@Description	Delete database
+//	@Tags			database
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Success		200		{object}	string
+//	@Router			/databases/{name} [delete]
+func deleteDB(c echo.Context) error {
+	databaseName := c.Param("name")
+	err := database.DeleteDatabase(databaseName)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, err.Error())
+	}
+	return c.JSON(http.StatusOK, "deleted")
+}
+
+//	@Summary		Delete table
+//	@Description	Delete table
+//	@Tags			table
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string	false	"Database name"
+//	@Param			table	path		string	false	"Table name"
+//	@Success		200		{object}	string
+//	@Router			/databases/{name}/{table} [delete]
+func deleteTable(c echo.Context) error {
+	databaseName := c.Param("name")
+	tableName := c.Param("table")
+
+	db, err := database.LoadDatabase(databaseName)
+	if err != nil {
+		switch err.(type) {
+		case *utils.DatabaseNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	err = db.DeleteTable(tableName)
+
+	if err != nil {
+		switch err.(type) {
+		case *utils.TableNotFoundError:
+			return c.String(http.StatusNotFound, err.Error())
+		default:
+			return err
+		}
+	}
+
+	err = db.SaveDatabase()
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "can not save database")
+	}
+
+	return c.String(http.StatusOK, "deleted")
 }

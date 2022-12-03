@@ -6,20 +6,11 @@ import "github.com/swaggo/swag"
 
 const docTemplate = `{
     "schemes": {{ marshal .Schemes }},
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
     "swagger": "2.0",
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {
-            "name": "Максим РАсахацький ТТП-42",
-            "email": "saharok.maks@gmail.com"
-        },
+        "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -77,6 +68,124 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/databases/{name}": {
+            "get": {
+                "description": "Get tables list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "database"
+                ],
+                "summary": "Get tables list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "database"
+                ],
+                "summary": "Delete database",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/databases/{name}/joined_tables": {
+            "get": {
+                "description": "Get table result of inner join two tables",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "table"
+                ],
+                "summary": "Get joined table",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "First table",
+                        "name": "t1",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Second table",
+                        "name": "t2",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Column from first table",
+                        "name": "c1",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Column from second table",
+                        "name": "c2",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/database.TableJSONValues"
                         }
                     }
                 }
@@ -156,6 +265,184 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete table",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "table"
+                ],
+                "summary": "Delete table",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Table name",
+                        "name": "table",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/databases/{name}/{table}/new_row": {
+            "post": {
+                "description": "Add new row",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "table"
+                ],
+                "summary": "Add new row",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Table name",
+                        "name": "table",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Row to add",
+                        "name": "row",
+                        "in": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/database.TableJSONValues"
+                        }
+                    }
+                }
+            }
+        },
+        "/databases/{name}/{table}/{id}": {
+            "put": {
+                "description": "Delete a row",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "table"
+                ],
+                "summary": "Delete a row",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Table name",
+                        "name": "table",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "row id",
+                        "name": "rowID",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Row to add",
+                        "name": "row",
+                        "in": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/database.TableJSONValues"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a row",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "table"
+                ],
+                "summary": "Delete a row",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Database name",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Table name",
+                        "name": "table",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "row id",
+                        "name": "rowID",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/database.TableJSONValues"
+                        }
+                    }
+                }
             }
         }
     },
@@ -197,12 +484,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "localhost:1323",
+	Version:          "",
+	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "My database management system",
-	Description:      "🙀",
+	Title:            "",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }
