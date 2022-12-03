@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: My DBMS specs
+  description: I have no time hlep me
+  version: 1.0.0
+paths:
+  "/databases/{name}/{table}":
+    get:
+      summary: Get table by name from database
+      parameters:
+        - in: path
+          description: Database name
+          name: name
+          schema:
+            type: string
+        - in: path
+          description: Table name
+          name: table
+          schema:
+            type: string
+      responses:
+        200:
+          description: Table from database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Table"
+components:
+  schemas:
+    Table:
+      required:
+        - name
+        - headers
+        - values
+      type: object
+      properties:
+        name:
+          type: string
+        headers:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+        values:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+
+
