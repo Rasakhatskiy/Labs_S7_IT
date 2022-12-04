@@ -4,18 +4,108 @@ info:
   description: I have no time hlep me
   version: 1.0.0
 paths:
-  "/databases/{name}/{table}":
+  "/databases/":
     get:
-      summary: Get table by name from database
+      summary: Get databases list
+      tags:
+        - database
+      responses:
+        200:
+          description: Databases list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create database
+      tags:
+        - database
+      requestBody:
+        description: Database name
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        201:
+          description: Database created
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  "/databases/{db_name}/":
+    post:
+      summary: Add new table
+      tags:
+        - table
       parameters:
         - in: path
           description: Database name
-          name: name
+          name: db_name
+          schema:
+            type: string
+      requestBody:
+        description: Table contents
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Table"
+      responses:
+        201:
+          description: Table created
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete database
+      tags:
+        - database
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+      responses:
+        200:
+          description: Deleted
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  "/databases/{db_name}/{table_name}":
+    get:
+      summary: Get table by name from database
+      tags:
+        - table
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
           schema:
             type: string
         - in: path
           description: Table name
-          name: table
+          name: table_name
           schema:
             type: string
       responses:
@@ -25,6 +115,201 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Table"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Add new row
+      tags:
+        - row
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+        - in: path
+          description: Table name
+          name: table_name
+          schema:
+            type: string
+      requestBody:
+        description: Row contents
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        201:
+          description: Row created
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete table
+      tags:
+        - table
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+        - in: path
+          description: Table name
+          name: table_name
+          schema:
+            type: string
+      responses:
+        200:
+          description: Deleted
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  "/databases/{db_name}/join_tables":
+    get:
+      summary: Get all tables and their columns to select for join
+      tags:
+        - table
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+      responses:
+        200:
+          description: Table from database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatabaseInfo"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  "/databases/{db_name}/joined_tables":
+    get:
+      summary: Get joined tables
+      tags:
+        - table
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+        - in: query
+          description: Table 1 name
+          name: t1
+          schema:
+            type: string
+        - in: query
+          description: Table 2 name
+          name: t2
+          schema:
+            type: string
+        - in: query
+          description: Column from table 1 name
+          name: c1
+          schema:
+            type: string
+        - in: query
+          description: Column from table 2 name
+          name: c2
+          schema:
+            type: string
+      responses:
+        200:
+          description: Table from database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Table"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  "/databases/{db_name}/{table_name}/{row_id}":
+    put:
+      summary: Edit row
+      tags:
+        - row
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+        - in: path
+          description: Table name
+          name: table_name
+          schema:
+            type: string
+        - in: path
+          description: Row index
+          name: row_id
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Row modified
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete row
+      tags:
+        - row
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+        - in: path
+          description: Table name
+          name: table_name
+          schema:
+            type: string
+        - in: path
+          description: Row index
+          name: row_id
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Deleted
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     Table:
@@ -51,5 +336,41 @@ components:
             type: array
             items:
               type: string
+
+    DatabaseInfo:
+      required:
+        - tables
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            # table without values
+            type: object
+            properties:
+              name:
+                type: string
+              headers:
+                type: array
+                items:
+                  # header name + type
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: string
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
 
 

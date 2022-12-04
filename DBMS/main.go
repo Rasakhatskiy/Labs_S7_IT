@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "DBMS/docs"
+	"DBMS/genImpl"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -18,7 +19,12 @@ import (
 // @host		localhost:1323
 // @accept		json
 // @produce	json
-func main() {
+
+func main()  {
+	genImpl.SetupHandler()
+}
+
+func mainOld() {
 	//createTestJson()
 
 	e := echo.New()

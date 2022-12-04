@@ -11,11 +11,48 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type GetDatabasesDbNameJoinedTablesParams struct {
+	T1 string
+	T2 string
+	C1 string
+	C2 string
+}
+
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Get databases list
+	// (GET /databases/)
+	GetDatabases(ctx echo.Context) error
+	// Create database
+	// (POST /databases/)
+	PostDatabases(ctx echo.Context) error
+	// Delete database
+	// (DELETE /databases/{db_name}/)
+	DeleteDatabasesDbName(ctx echo.Context, dbName string) error
+	// Add new table
+	// (POST /databases/{db_name}/)
+	PostDatabasesDbName(ctx echo.Context, dbName string) error
+	// Get all tables and their columns to select for join
+	// (GET /databases/{db_name}/join_tables)
+	GetDatabasesDbNameJoinTables(ctx echo.Context, dbName string) error
+	// Get joined tables
+	// (GET /databases/{db_name}/joined_tables)
+	GetDatabasesDbNameJoinedTables(ctx echo.Context, dbName string, params GetDatabasesDbNameJoinedTablesParams) error
+	// Delete table
+	// (DELETE /databases/{db_name}/{table_name})
+	DeleteDatabasesDbNameTableName(ctx echo.Context, dbName string, tableName string) error
 	// Get table by name from database
-	// (GET /databases/{name}/{table})
-	GetDatabasesNameTable(ctx echo.Context, name string, table string) error
+	// (GET /databases/{db_name}/{table_name})
+	GetDatabasesDbNameTableName(ctx echo.Context, dbName string, tableName string) error
+	// Add new row
+	// (POST /databases/{db_name}/{table_name})
+	PostDatabasesDbNameTableName(ctx echo.Context, dbName string, tableName string) error
+	// Delete row
+	// (DELETE /databases/{db_name}/{table_name}/{row_id})
+	DeleteDatabasesDbNameTableNameRowId(ctx echo.Context, dbName string, tableName string, rowId int) error
+	// Edit row
+	// (PUT /databases/{db_name}/{table_name}/{row_id})
+	PutDatabasesDbNameTableNameRowId(ctx echo.Context, dbName string, tableName string, rowId int) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -23,27 +60,251 @@ type ServerInterfaceWrapper struct {
 	Handler ServerInterface
 }
 
-// GetDatabasesNameTable converts echo context to params.
-func (w *ServerInterfaceWrapper) GetDatabasesNameTable(ctx echo.Context) error {
+// GetDatabases converts echo context to params.
+func (w *ServerInterfaceWrapper) GetDatabases(ctx echo.Context) error {
 	var err error
-	// ------------- Path parameter "name" -------------
-	var name string
 
-	err = runtime.BindStyledParameterWithLocation("simple", false, "name", runtime.ParamLocationPath, ctx.Param("name"), &name)
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetDatabases(ctx)
+	return err
+}
+
+// PostDatabases converts echo context to params.
+func (w *ServerInterfaceWrapper) PostDatabases(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostDatabases(ctx)
+	return err
+}
+
+// DeleteDatabasesDbName converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteDatabasesDbName(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter name: %s", err))
-	}
-
-	// ------------- Path parameter "table" -------------
-	var table string
-
-	err = runtime.BindStyledParameterWithLocation("simple", false, "table", runtime.ParamLocationPath, ctx.Param("table"), &table)
-	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter table: %s", err))
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
 	}
 
 	// Invoke the callback with all the unmarshalled arguments
-	err = w.Handler.GetDatabasesNameTable(ctx, name, table)
+	err = w.Handler.DeleteDatabasesDbName(ctx, dbName)
+	return err
+}
+
+// PostDatabasesDbName converts echo context to params.
+func (w *ServerInterfaceWrapper) PostDatabasesDbName(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostDatabasesDbName(ctx, dbName)
+	return err
+}
+
+// GetDatabasesDbNameJoinTables converts echo context to params.
+func (w *ServerInterfaceWrapper) GetDatabasesDbNameJoinTables(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetDatabasesDbNameJoinTables(ctx, dbName)
+	return err
+}
+
+// GetDatabasesDbNameJoinedTables converts echo context to params.
+func (w *ServerInterfaceWrapper) GetDatabasesDbNameJoinedTables(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDatabasesDbNameJoinedTablesParams
+	// ------------- Optional query parameter "t1" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "t1", ctx.QueryParams(), &params.T1)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter t1: %s", err))
+	}
+
+	// ------------- Optional query parameter "t2" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "t2", ctx.QueryParams(), &params.T2)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter t2: %s", err))
+	}
+
+	// ------------- Optional query parameter "c1" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "c1", ctx.QueryParams(), &params.C1)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter c1: %s", err))
+	}
+
+	// ------------- Optional query parameter "c2" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "c2", ctx.QueryParams(), &params.C2)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter c2: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetDatabasesDbNameJoinedTables(ctx, dbName, params)
+	return err
+}
+
+// DeleteDatabasesDbNameTableName converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteDatabasesDbNameTableName(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// ------------- Path parameter "table_name" -------------
+	var tableName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "table_name", runtime.ParamLocationPath, ctx.Param("table_name"), &tableName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter table_name: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteDatabasesDbNameTableName(ctx, dbName, tableName)
+	return err
+}
+
+// GetDatabasesDbNameTableName converts echo context to params.
+func (w *ServerInterfaceWrapper) GetDatabasesDbNameTableName(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// ------------- Path parameter "table_name" -------------
+	var tableName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "table_name", runtime.ParamLocationPath, ctx.Param("table_name"), &tableName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter table_name: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetDatabasesDbNameTableName(ctx, dbName, tableName)
+	return err
+}
+
+// PostDatabasesDbNameTableName converts echo context to params.
+func (w *ServerInterfaceWrapper) PostDatabasesDbNameTableName(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// ------------- Path parameter "table_name" -------------
+	var tableName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "table_name", runtime.ParamLocationPath, ctx.Param("table_name"), &tableName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter table_name: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostDatabasesDbNameTableName(ctx, dbName, tableName)
+	return err
+}
+
+// DeleteDatabasesDbNameTableNameRowId converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteDatabasesDbNameTableNameRowId(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// ------------- Path parameter "table_name" -------------
+	var tableName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "table_name", runtime.ParamLocationPath, ctx.Param("table_name"), &tableName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter table_name: %s", err))
+	}
+
+	// ------------- Path parameter "row_id" -------------
+	var rowId int
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "row_id", runtime.ParamLocationPath, ctx.Param("row_id"), &rowId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter row_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteDatabasesDbNameTableNameRowId(ctx, dbName, tableName, rowId)
+	return err
+}
+
+// PutDatabasesDbNameTableNameRowId converts echo context to params.
+func (w *ServerInterfaceWrapper) PutDatabasesDbNameTableNameRowId(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// ------------- Path parameter "table_name" -------------
+	var tableName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "table_name", runtime.ParamLocationPath, ctx.Param("table_name"), &tableName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter table_name: %s", err))
+	}
+
+	// ------------- Path parameter "row_id" -------------
+	var rowId int
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "row_id", runtime.ParamLocationPath, ctx.Param("row_id"), &rowId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter row_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PutDatabasesDbNameTableNameRowId(ctx, dbName, tableName, rowId)
 	return err
 }
 
@@ -75,6 +336,16 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
-	router.GET(baseURL+"/databases/:name/:table", wrapper.GetDatabasesNameTable)
+	router.GET(baseURL+"/databases/", wrapper.GetDatabases)
+	router.POST(baseURL+"/databases/", wrapper.PostDatabases)
+	router.DELETE(baseURL+"/databases/:db_name/", wrapper.DeleteDatabasesDbName)
+	router.POST(baseURL+"/databases/:db_name/", wrapper.PostDatabasesDbName)
+	router.GET(baseURL+"/databases/:db_name/join_tables", wrapper.GetDatabasesDbNameJoinTables)
+	router.GET(baseURL+"/databases/:db_name/joined_tables", wrapper.GetDatabasesDbNameJoinedTables)
+	router.DELETE(baseURL+"/databases/:db_name/:table_name", wrapper.DeleteDatabasesDbNameTableName)
+	router.GET(baseURL+"/databases/:db_name/:table_name", wrapper.GetDatabasesDbNameTableName)
+	router.POST(baseURL+"/databases/:db_name/:table_name", wrapper.PostDatabasesDbNameTableName)
+	router.DELETE(baseURL+"/databases/:db_name/:table_name/:row_id", wrapper.DeleteDatabasesDbNameTableNameRowId)
+	router.PUT(baseURL+"/databases/:db_name/:table_name/:row_id", wrapper.PutDatabasesDbNameTableNameRowId)
 
 }

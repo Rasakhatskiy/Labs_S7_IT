@@ -4,7 +4,7 @@ GET localhost:1323/databases
 ### Get tables from database Animals
 GET localhost:1323/databases/Animals
 
-###
+### Get table
 GET localhost:1323/databases/Animals/Dogs
 
 ###
