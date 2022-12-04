@@ -5,6 +5,7 @@ import (
 	"DBMS/genserver"
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"net/http"
 )
 
@@ -20,6 +21,13 @@ func SetupHandler() {
 	var myApi MyServerImpl
 	e := echo.New()
 	genserver.RegisterHandlers(e, &myApi)
+	e.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
+	e.HTTPErrorHandler = func(err error, c echo.Context) {
+		_ = c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"code":    500,
+			"message": err.Error(),
+		})
+	}
 	e.Logger.Fatal(e.Start(":1323"))
 }
 
