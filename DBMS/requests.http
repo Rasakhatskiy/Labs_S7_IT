@@ -1,6 +1,12 @@
 ### GET databases list
 GET localhost:1323/databases
 
+###
+POST localhost:1323/databases
+Content-Type: application/json
+
+"Suboba"
+
 ### Get tables from database Animals
 GET localhost:1323/databases/Animals
 

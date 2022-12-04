@@ -173,22 +173,16 @@ func (db *Database) GetJSONInfo() DatabaseInfoJSON {
 }
 
 func DeleteDatabase(name string) error {
-	db := Database{
-		Name:   name,
-		Tables: nil,
-	}
-	dbpaths := ReadDatabasesPaths()
+	databasesPaths := ReadDatabasesPaths()
 	pathEntry := DBPathJSON{
 		Name: name,
 	}
-	if !utils.Contains(dbpaths, pathEntry) {
+	if !utils.Contains(databasesPaths, pathEntry) {
 		return errors.New("no such database")
 	}
 
-	i, _ := utils.Find(dbpaths, pathEntry)
-	utils.RemoveIndex(dbpaths, i)
-	SaveDatabasesPaths(dbpaths)
-
-	err := db.SaveDatabase()
-	return err
+	i, _ := utils.Find(databasesPaths, pathEntry)
+	databasesPaths = utils.RemoveIndex(databasesPaths, i)
+	SaveDatabasesPaths(databasesPaths)
+	return nil
 }

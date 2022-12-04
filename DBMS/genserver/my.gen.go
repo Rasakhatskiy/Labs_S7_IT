@@ -21,16 +21,19 @@ type GetDatabasesDbNameJoinedTablesParams struct {
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// Get databases list
-	// (GET /databases/)
+	// (GET /databases)
 	GetDatabases(ctx echo.Context) error
 	// Create database
-	// (POST /databases/)
+	// (POST /databases)
 	PostDatabases(ctx echo.Context) error
 	// Delete database
-	// (DELETE /databases/{db_name}/)
+	// (DELETE /databases/{db_name})
 	DeleteDatabasesDbName(ctx echo.Context, dbName string) error
+
+	// (GET /databases/{db_name})
+	GetDatabasesDbName(ctx echo.Context, dbName string) error
 	// Add new table
-	// (POST /databases/{db_name}/)
+	// (POST /databases/{db_name})
 	PostDatabasesDbName(ctx echo.Context, dbName string) error
 	// Get all tables and their columns to select for join
 	// (GET /databases/{db_name}/join_tables)
@@ -91,6 +94,22 @@ func (w *ServerInterfaceWrapper) DeleteDatabasesDbName(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.DeleteDatabasesDbName(ctx, dbName)
+	return err
+}
+
+// GetDatabasesDbName converts echo context to params.
+func (w *ServerInterfaceWrapper) GetDatabasesDbName(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "db_name" -------------
+	var dbName string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "db_name", runtime.ParamLocationPath, ctx.Param("db_name"), &dbName)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter db_name: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetDatabasesDbName(ctx, dbName)
 	return err
 }
 
@@ -336,10 +355,11 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
-	router.GET(baseURL+"/databases/", wrapper.GetDatabases)
-	router.POST(baseURL+"/databases/", wrapper.PostDatabases)
-	router.DELETE(baseURL+"/databases/:db_name/", wrapper.DeleteDatabasesDbName)
-	router.POST(baseURL+"/databases/:db_name/", wrapper.PostDatabasesDbName)
+	router.GET(baseURL+"/databases", wrapper.GetDatabases)
+	router.POST(baseURL+"/databases", wrapper.PostDatabases)
+	router.DELETE(baseURL+"/databases/:db_name", wrapper.DeleteDatabasesDbName)
+	router.GET(baseURL+"/databases/:db_name", wrapper.GetDatabasesDbName)
+	router.POST(baseURL+"/databases/:db_name", wrapper.PostDatabasesDbName)
 	router.GET(baseURL+"/databases/:db_name/join_tables", wrapper.GetDatabasesDbNameJoinTables)
 	router.GET(baseURL+"/databases/:db_name/joined_tables", wrapper.GetDatabasesDbNameJoinedTables)
 	router.DELETE(baseURL+"/databases/:db_name/:table_name", wrapper.DeleteDatabasesDbNameTableName)

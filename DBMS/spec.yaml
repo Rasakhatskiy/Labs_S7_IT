@@ -4,7 +4,7 @@ info:
   description: I have no time hlep me
   version: 1.0.0
 paths:
-  "/databases/":
+  "/databases":
     get:
       summary: Get databases list
       tags:
@@ -45,7 +45,31 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  "/databases/{db_name}/":
+  "/databases/{db_name}":
+    get:
+      tags:
+        - table
+      parameters:
+        - in: path
+          description: Database name
+          name: db_name
+          schema:
+            type: string
+      responses:
+        200:
+          description: Table
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     post:
       summary: Add new table
       tags:
