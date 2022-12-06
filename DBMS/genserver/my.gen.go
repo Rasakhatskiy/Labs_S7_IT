@@ -11,13 +11,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type GetDatabasesDbNameJoinedTablesParams struct {
-	T1 string
-	T2 string
-	C1 string
-	C2 string
-}
-
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// Get databases list

@@ -58,6 +58,17 @@ func tableToJson(table *database.Table) *database.TableJSONValues {
 type MyServerImpl struct {
 }
 
+func (s *MyServerImpl) GetDatabasesDbName(ctx echo.Context, dbName string) error {
+	db, err := database.LoadDatabase(dbName)
+	if err != nil {
+		return ctx.JSON(http.StatusNotFound, err.Error())
+	}
+
+	tables := db.GetTablesList()
+
+	return ctx.JSON(http.StatusOK, tables)
+}
+
 func (s *MyServerImpl) GetDatabases(ctx echo.Context) error {
 	response := database.ReadDatabasesPaths()
 	return ctx.JSON(http.StatusOK, response)

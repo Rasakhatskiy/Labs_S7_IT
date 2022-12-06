@@ -1,20 +1,20 @@
 ### GET databases list
-GET localhost:1323/databases
+GET localhost:1323/databases/
 
 ###
-POST localhost:1323/databases
+POST localhost:1323/databases/
 Content-Type: application/json
 
 "Suboba"
 
 ### Get tables from database Animals
-GET localhost:1323/databases/Animals
+GET localhost:1323/databases/Animals/
 
 ### Get table
-GET localhost:1323/databases/Animals/Dogs
+GET localhost:1323/databases/Animals/Dogs/
 
 ###
-GET localhost:1323/databases/animals/join_tables
+GET localhost:1323/databases/animals/join_tables/
 
 ### GET joined table by column 'owner_id' from table 'Dogs' and 'id' from table 'owners'
 GET localhost:1323/databases/animals/joined_tables?t1=Dogs&t2=owners&c1=owner_id&c2=id

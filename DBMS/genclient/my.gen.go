@@ -100,6 +100,9 @@ type ClientInterface interface {
 	// DeleteDatabasesDbName request
 	DeleteDatabasesDbName(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetDatabasesDbName request
+	GetDatabasesDbName(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// PostDatabasesDbName request with any body
 	PostDatabasesDbNameWithBody(ctx context.Context, dbName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -167,6 +170,18 @@ func (c *Client) PostDatabases(ctx context.Context, body PostDatabasesJSONReques
 
 func (c *Client) DeleteDatabasesDbName(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteDatabasesDbNameRequest(c.Server, dbName)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetDatabasesDbName(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDatabasesDbNameRequest(c.Server, dbName)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +321,7 @@ func NewGetDatabasesRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/databases/")
+	operationPath := fmt.Sprintf("/databases")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -344,7 +359,7 @@ func NewPostDatabasesRequestWithBody(server string, contentType string, body io.
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/databases/")
+	operationPath := fmt.Sprintf("/databases")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -380,7 +395,7 @@ func NewDeleteDatabasesDbNameRequest(server string, dbName string) (*http.Reques
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/databases/%s/", pathParam0)
+	operationPath := fmt.Sprintf("/databases/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -391,6 +406,40 @@ func NewDeleteDatabasesDbNameRequest(server string, dbName string) (*http.Reques
 	}
 
 	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetDatabasesDbNameRequest generates requests for GetDatabasesDbName
+func NewGetDatabasesDbNameRequest(server string, dbName string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "db_name", runtime.ParamLocationPath, dbName)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/databases/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -425,7 +474,7 @@ func NewPostDatabasesDbNameRequestWithBody(server string, dbName string, content
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/databases/%s/", pathParam0)
+	operationPath := fmt.Sprintf("/databases/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -867,6 +916,9 @@ type ClientWithResponsesInterface interface {
 	// DeleteDatabasesDbName request
 	DeleteDatabasesDbNameWithResponse(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*DeleteDatabasesDbNameResponse, error)
 
+	// GetDatabasesDbName request
+	GetDatabasesDbNameWithResponse(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*GetDatabasesDbNameResponse, error)
+
 	// PostDatabasesDbName request with any body
 	PostDatabasesDbNameWithBodyWithResponse(ctx context.Context, dbName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostDatabasesDbNameResponse, error)
 
@@ -957,6 +1009,29 @@ func (r DeleteDatabasesDbNameResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r DeleteDatabasesDbNameResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetDatabasesDbNameResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *[]string
+	JSONDefault  *Error
+}
+
+// Status returns HTTPResponse.Status
+func (r GetDatabasesDbNameResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetDatabasesDbNameResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -1177,6 +1252,15 @@ func (c *ClientWithResponses) DeleteDatabasesDbNameWithResponse(ctx context.Cont
 	return ParseDeleteDatabasesDbNameResponse(rsp)
 }
 
+// GetDatabasesDbNameWithResponse request returning *GetDatabasesDbNameResponse
+func (c *ClientWithResponses) GetDatabasesDbNameWithResponse(ctx context.Context, dbName string, reqEditors ...RequestEditorFn) (*GetDatabasesDbNameResponse, error) {
+	rsp, err := c.GetDatabasesDbName(ctx, dbName, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetDatabasesDbNameResponse(rsp)
+}
+
 // PostDatabasesDbNameWithBodyWithResponse request with arbitrary body returning *PostDatabasesDbNameResponse
 func (c *ClientWithResponses) PostDatabasesDbNameWithBodyWithResponse(ctx context.Context, dbName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostDatabasesDbNameResponse, error) {
 	rsp, err := c.PostDatabasesDbNameWithBody(ctx, dbName, contentType, body, reqEditors...)
@@ -1338,6 +1422,39 @@ func ParseDeleteDatabasesDbNameResponse(rsp *http.Response) (*DeleteDatabasesDbN
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest Error
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDatabasesDbNameResponse parses an HTTP response from a GetDatabasesDbNameWithResponse call
+func ParseGetDatabasesDbNameResponse(rsp *http.Response) (*GetDatabasesDbNameResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetDatabasesDbNameResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest Error
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
