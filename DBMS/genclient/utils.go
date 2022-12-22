@@ -1,9 +1,19 @@
 package genclient
 
 type PostDatabasesJSONRequestBody struct {
+	Name string `json:"name"`
 }
 
+type TableHeaderJSON struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
+// PostDatabasesDbNameJSONRequestBody table
 type PostDatabasesDbNameJSONRequestBody struct {
+	Name    string            `json:"name"`
+	Headers []TableHeaderJSON `json:"headers"`
+	Values  [][]interface{}   `json:"values"`
 }
 
 type GetDatabasesDbNameJoinedTablesParams struct {
@@ -13,10 +23,12 @@ type GetDatabasesDbNameJoinedTablesParams struct {
 	C2 *string
 }
 
-type PostDatabasesDbNameTableNameJSONRequestBody struct {
+type Error struct {
+	Code    int
+	Message string
 }
 
-type Error struct {
+type PostDatabasesDbNameTableNameJSONRequestBody struct {
 }
 
 type DatabaseInfo struct {

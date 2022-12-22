@@ -7,6 +7,8 @@
     <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/databases/Animals.gob" beforeDir="false" afterPath="$PROJECT_DIR$/databases/Animals.gob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genclient/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/genclient/utils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/5.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/5.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +55,7 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/Maksym",
+    "last_opened_file_path": "D:/OneDrive/Semester 7/IT_to_merge/CLI_DBMS_viewer",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
