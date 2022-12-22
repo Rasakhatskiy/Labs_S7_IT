@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "DBMS/docs"
-	"DBMS/serverImpl"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -21,7 +20,8 @@ import (
 // @produce	json
 
 func main() {
-	serverImpl.SetupHandler()
+	//serverImpl.SetupHandler()
+	mainOld()
 }
 
 func mainOld() {

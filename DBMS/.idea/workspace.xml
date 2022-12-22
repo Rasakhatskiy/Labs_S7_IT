@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="acebe2e3-3906-4059-9734-0036e9f7956a" name="Changes" comment="...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/databases/Animals.gob" beforeDir="false" afterPath="$PROJECT_DIR$/databases/Animals.gob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/genclient/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/genclient/utils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/5.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/5.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +101,9 @@
     <configuration name="requests | GET databases list" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/requests.http" requestIdentifier="GET databases list" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="requests | GET joined table by column 'owner_id' from table 'Dogs' and 'id' from table 'owners'" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/requests.http" index="6" requestIdentifier="GET joined table by column 'owner_id' from table 'Dogs' and 'id' from table 'owners'" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="requests | Get tables from database Animals" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/requests.http" index="2" requestIdentifier="Get tables from database Animals" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -110,9 +111,6 @@
       <method v="2" />
     </configuration>
     <configuration name="requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/requests.http" index="2" requestIdentifier="#2" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="requests | #8" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/requests.http" index="8" requestIdentifier="#8" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration default="true" type="SwaggerCodegen">
@@ -133,19 +131,19 @@
     </configuration>
     <list>
       <item itemvalue="Go Build.go build DBMS" />
+      <item itemvalue="HTTP Request.requests | GET joined table by column 'owner_id' from table 'Dogs' and 'id' from table 'owners'" />
       <item itemvalue="HTTP Request.requests | #2" />
       <item itemvalue="HTTP Request.requests | GET databases list" />
       <item itemvalue="HTTP Request.requests | Get tables from database Animals" />
-      <item itemvalue="HTTP Request.requests | #8" />
       <item itemvalue="HTTP Request.requests | PUT edit owner" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.requests | GET joined table by column 'owner_id' from table 'Dogs' and 'id' from table 'owners'" />
         <item itemvalue="HTTP Request.requests | GET databases list" />
         <item itemvalue="HTTP Request.requests | Get tables from database Animals" />
         <item itemvalue="HTTP Request.requests | #2" />
         <item itemvalue="HTTP Request.requests | PUT edit owner" />
-        <item itemvalue="HTTP Request.requests | #8" />
       </list>
     </recent_temporary>
   </component>
@@ -178,6 +176,15 @@
     <settings-migrated>true</settings-migrated>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/serverImpl/impl.go</url>
+          <line>152</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="GoTestRunConfiguration">
         <watch expression="*(*&quot;[][]DBMS/database.DBType&quot;)(824633861024)" />
